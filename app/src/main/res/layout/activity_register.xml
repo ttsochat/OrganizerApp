@@ -8,18 +8,18 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="219dp"
-        android:layout_height="125dp"
+        android:layout_width="195dp"
+        android:layout_height="104dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.016"
         app:srcCompat="@drawable/organizer_logo" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="328dp"
+        android:layout_width="320dp"
         android:layout_height="59dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/border"
@@ -27,15 +27,31 @@
         android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:hint="Password"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:id="@+id/confirm"
+        android:layout_width="320dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:hint="Confirm Password"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/username"
-        android:layout_width="328dp"
+        android:layout_width="320dp"
         android:layout_height="59dp"
         android:background="@drawable/border"
         android:ems="10"
@@ -52,7 +68,7 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="328dp"
+        android:layout_width="320dp"
         android:layout_height="59dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/border"
@@ -68,7 +84,7 @@
 
     <Button
         android:id="@+id/register"
-        android:layout_width="328dp"
+        android:layout_width="320dp"
         android:layout_height="59dp"
         android:layout_marginBottom="68dp"
         android:backgroundTint="@color/PrimaryColor"
@@ -78,21 +94,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/confirm"
-        android:layout_width="328dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:hint="Password"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -114,10 +116,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintHorizontal_bias="0.661"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.591" />
+        app:layout_constraintVertical_bias="0.933" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
