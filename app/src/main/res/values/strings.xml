@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">OrganizerApp</string>
+    <string name="welcome_thank_you_for_registering">Welcome, thank you for registering!</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="logo">Logo</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 </resources>

@@ -15,7 +15,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.016"
-        app:srcCompat="@drawable/organizer_logo" />
+        app:srcCompat="@drawable/organizer_logo"
+        android:contentDescription="@string/logo" />
 
     <EditText
         android:id="@+id/password"
@@ -24,13 +25,15 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/confirm"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/email"
@@ -39,13 +42,15 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/confirm"
@@ -54,13 +59,15 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="@string/confirm_password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        android:autofillHints="" />
 
 
     <EditText
@@ -69,15 +76,17 @@
         android:layout_height="63dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.423"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/register"
@@ -85,7 +94,7 @@
         android:layout_height="59dp"
         android:layout_marginBottom="64dp"
         android:backgroundTint="@color/PrimaryColor"
-        android:text="Register"
+        android:text="@string/register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
@@ -105,12 +114,11 @@
         android:id="@+id/welcome"
         android:layout_width="340dp"
         android:layout_height="36dp"
-        android:text="Welcome, thank you for registering!"
+        android:text="@string/welcome_thank_you_for_registering"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.661"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.933" />
