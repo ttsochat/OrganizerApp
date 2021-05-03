@@ -6,62 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <EditText
         android:id="@+id/username"
         android:layout_width="328dp"
         android:layout_height="59dp"
-        android:layout_marginTop="244dp"
         android:autofillHints=""
         android:background="@drawable/border"
         android:ems="10"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:text="Username"
+        android:textColorHint="#8A8888"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="326dp"
-        android:layout_height="64dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:text="Password"
-        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.476" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="362dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.918"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintVertical_bias="0.0"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/PrimaryColor"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="326dp"
+            android:layout_height="64dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:textColorHint="#FF8A8888"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/login"
         android:layout_width="327dp"
         android:layout_height="59dp"
-        android:text="Log In"
+        android:text="@string/log_in"
         app:backgroundTint="#94B19C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="0.14" />
 
     <Button
         android:id="@+id/forgot"
         android:layout_width="140dp"
         android:layout_height="51dp"
-        android:text="Forgot Password?"
+        android:background="@drawable/button_border"
+        android:text="@string/forgot_password"
         android:textColor="@color/black"
         android:textSize="11sp"
-        app:backgroundTint="#00FFFFFF"
-
         app:iconTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signup"
@@ -74,11 +86,10 @@
         android:id="@+id/signup"
         android:layout_width="140dp"
         android:layout_height="51dp"
-        android:text="Sign Up"
+        android:background="@drawable/button_border"
+        android:text="@string/sign_up"
         android:textColor="@color/black"
         android:textSize="11sp"
-        app:backgroundTint="#00FFFFFF"
-        app:iconTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
