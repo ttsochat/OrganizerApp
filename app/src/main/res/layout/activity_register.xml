@@ -30,7 +30,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/confirm"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <EditText
@@ -46,7 +45,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <EditText
@@ -62,7 +60,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
 
@@ -78,7 +75,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:layout_constraintVertical_bias="0.423" />
@@ -92,7 +88,6 @@
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.405"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <ProgressBar
