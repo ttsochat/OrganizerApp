@@ -10,16 +10,16 @@
         android:id="@+id/username"
         android:layout_width="328dp"
         android:layout_height="59dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="304dp"
         android:autofillHints=""
         android:background="@drawable/border"
         android:ems="10"
         android:inputType="textPersonName"
+        android:paddingLeft="20dp"
         android:text="Username"
         android:textSize="20sp"
-        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,15 +30,15 @@
         android:background="@drawable/border"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Password"
         android:paddingLeft="20dp"
+        android:text="Password"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <Button
         android:id="@+id/login"
@@ -51,7 +51,7 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintVertical_bias="0.149" />
 
     <Button
         android:id="@+id/forgot"
