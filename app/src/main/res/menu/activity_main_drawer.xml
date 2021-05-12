@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_daily_tasks"
+            android:icon="@drawable/baseline_task_alt_24"
+            android:title="@string/daily_tasks" />
+        <item
+            android:id="@+id/nav_my_list"
+            android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+            android:title="@string/my_list" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/baseline_calendar_today_24"
+            android:title="@string/calendar" />
+        <item
+            android:id="@+id/nav_tomato_stats"
+            android:icon="@drawable/baseline_show_chart_24"
+            android:title="@string/tomato_stats" />
+    </group>
+</menu>
