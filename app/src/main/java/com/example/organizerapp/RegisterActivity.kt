@@ -1,14 +1,13 @@
 package com.example.organizerapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.organizerapp.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuthException
+import android.util.Log
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -54,16 +53,19 @@ class RegisterActivity : AppCompatActivity() {
             binding.confirm.requestFocus()
             return
         }
-
         auth.createUserWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString())
                 .addOnCompleteListener(this) { task ->
+                    Log.d("TAG", "Message1")
                     if (task.isSuccessful) {
-                        startActivity(Intent(this,LoginActivity::class.java))
+                        Log.d("TAG", "Message2")
+                        startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     } else {
-                        Toast.makeText(baseContext, "Sign up failed.",
-                                Toast.LENGTH_SHORT).show()
-
+                        Log.d("TAG", "Message3")
+                        val errorCode = (task.exception as FirebaseAuthException?)!!.errorCode
+                        Log.d("TAG", errorCode)
+//                        Toast.makeText(baseContext, "Sign up failed.",
+//                                Toast.LENGTH_SHORT).show()
                     }
                 }
     }
