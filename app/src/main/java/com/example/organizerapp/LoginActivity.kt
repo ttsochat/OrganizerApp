@@ -21,6 +21,12 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this,RegisterActivity::class.java))
             finish()
         }
+        //TEMPORARY LOGIN LISTENER
+        val button = findViewById<Button>(R.id.login)
+        button.setOnClickListener {
+            val intent = Intent(this, NavigationActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     public override fun onStart() {

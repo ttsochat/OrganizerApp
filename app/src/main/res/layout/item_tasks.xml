@@ -2,34 +2,36 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:padding="15dp"
     >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/taskCard"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        >
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/taskText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="70dp"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:background="@drawable/border"
                 android:layout_weight="1"
-                />
+                android:padding="15dp"/>
             <ImageView
                 android:id="@+id/editIcon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:layout_gravity="center_vertical|right"
+                android:layout_gravity="center_vertical|end"
                 android:src="@drawable/edit_icon"/>
         </FrameLayout>
     </androidx.cardview.widget.CardView>

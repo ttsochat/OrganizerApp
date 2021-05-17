@@ -15,13 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentDailyTasksBinding
 import com.google.android.material.snackbar.Snackbar
+import org.w3c.dom.Text
 
 class DailyTasksFragment : Fragment() {
 
     private lateinit var galleryDailyTasksViewModel: DailyTasksViewModel
     private var _binding: FragmentDailyTasksBinding? = null
-    private var allTasks = ArrayList<Task>()
-//    val firebaseDatabase = FirebaseDataBase.getInstance()
+    val task1 = Task("task 1")
+    val task2 = Task("task 2")
+    val task3 = Task("task 3")
+    private val allTasks = listOf<Task>(task1, task2, task3)
+    //val firebaseDatabase = FirebaseDataBase.getInstance()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +41,13 @@ class DailyTasksFragment : Fragment() {
 
         _binding = FragmentDailyTasksBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val adapter = TaskAdapter(allTasks)
+
         val recyclerView: RecyclerView = binding.tasksRecycler
+
+        recyclerView.adapter = adapter
+
         val textView: TextView = binding.textDailyTasks
         galleryDailyTasksViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
@@ -47,12 +57,8 @@ class DailyTasksFragment : Fragment() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
-        //Adapter Specs
-        recyclerView.hasFixedSize()
-//        recyclerView.setLayoutManager = LinearLayoutManager(this)
-        recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.adapter = TaskAdapter(allTasks, R.layout.item_tasks)
+//        _binding!!.fab.setOnClickListener {
+//        }
 
         return root
     }
@@ -62,29 +68,4 @@ class DailyTasksFragment : Fragment() {
         _binding = null
     }
 
-    //Adapter
-    class TaskAdapter(val tasks : List<Task>, val itemLayout : Int) : RecyclerView.Adapter<TaskViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-            var view = LayoutInflater.from(parent.context).inflate(itemLayout, parent,false)
-            return TaskViewHolder(view)
-        }
-
-        override fun getItemCount(): Int {
-            return tasks.size
-        }
-
-        override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-            TODO("Not yet implemented")
-        }
-    }
-
-    //ViewHolder
-    class TaskViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        private var textOfTask: TextView?
-        private var iconOfEdit: ImageView?
-        init {
-            textOfTask = itemView.findViewById<TextView>(R.id.taskText)
-            iconOfEdit = itemView.findViewById<ImageView>(R.id.editIcon)
-        }
-    }
 }
