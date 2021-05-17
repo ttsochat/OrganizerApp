@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +18,7 @@ import com.example.organizerapp.databinding.FragmentDailyTasksBinding
 import com.google.android.material.snackbar.Snackbar
 import org.w3c.dom.Text
 
-class DailyTasksFragment : Fragment() {
+class DailyTasksFragment : Fragment(),  TaskAdapter.OnTaskClickListener{
 
     private lateinit var galleryDailyTasksViewModel: DailyTasksViewModel
     private var _binding: FragmentDailyTasksBinding? = null
@@ -42,7 +43,7 @@ class DailyTasksFragment : Fragment() {
         _binding = FragmentDailyTasksBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val adapter = TaskAdapter(allTasks)
+        val adapter = TaskAdapter(allTasks, this)
 
         val recyclerView: RecyclerView = binding.tasksRecycler
 
@@ -66,6 +67,11 @@ class DailyTasksFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskClick(position: Int) {
+        Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        val clickedItem : Task = allTasks[position]
     }
 
 }

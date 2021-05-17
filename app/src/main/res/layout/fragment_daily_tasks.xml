@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.dailyTasks.DailyTasksFragment">
 
-<!--    TODO ADD THE FREAKING TOMATOES BRUV-->
+<!--    TODO ADD TOMATOES BAR-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecycler"
