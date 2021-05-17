@@ -182,7 +182,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="110dp" />
 
-
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"

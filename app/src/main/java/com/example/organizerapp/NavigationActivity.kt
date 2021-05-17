@@ -22,8 +22,6 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarNavigation.toolbar)
@@ -63,4 +61,3 @@ class NavigationActivity : AppCompatActivity() {
 
 
 }
-

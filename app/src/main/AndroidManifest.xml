@@ -12,7 +12,8 @@
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/Theme.OrganizerApp.NoActionBar"></activity>
+            android:theme="@style/Theme.OrganizerApp.NoActionBar">
+      </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
