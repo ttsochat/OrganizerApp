@@ -10,26 +10,59 @@
         android:id="@+id/nav_daily_tasks"
         android:name="com.example.organizerapp.ui.dailyTasks.DailyTasksFragment"
         android:label="@string/menu_daily_tasks"
-        tools:layout="@layout/fragment_daily_tasks" />
+        tools:layout="@layout/fragment_daily_tasks" >
+        <action
+            android:id="@+id/action_nav_daily_tasks_to_nav_my_list"
+            app:destination="@id/nav_my_list" />
+        <action
+            android:id="@+id/action_nav_daily_tasks_to_nav_calendar"
+            app:destination="@id/nav_calendar" />
+        <action
+            android:id="@+id/action_nav_daily_tasks_to_nav_tomato_stats"
+            app:destination="@id/nav_tomato_stats" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_my_list"
         android:name="com.example.organizerapp.ui.myLists.MyListsFragment"
         android:label="@string/menu_my_list"
-        tools:layout="@layout/fragment_my_lists" />
+        tools:layout="@layout/fragment_my_lists" >
+        <action
+            android:id="@+id/action_nav_my_list_to_nav_daily_tasks"
+            app:destination="@id/nav_daily_tasks" />
+        <action
+            android:id="@+id/action_nav_my_list_to_myListEditFragment"
+            app:destination="@id/myListEditFragment" />
+    </fragment>
 
 
     <fragment
         android:id="@+id/nav_calendar"
         android:name="com.example.organizerapp.ui.calendar.CalendarFragment"
         android:label="@string/menu_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_nav_calendar_to_nav_daily_tasks"
+            app:destination="@id/nav_daily_tasks" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_tomato_stats"
         android:name="com.example.organizerapp.ui.tomatoStats.TomatoStatsFragment"
         android:label="@string/menu_tomato_stats"
-        tools:layout="@layout/fragment_tomato_stats" />
+        tools:layout="@layout/fragment_tomato_stats" >
+        <action
+            android:id="@+id/action_nav_tomato_stats_to_nav_daily_tasks"
+            app:destination="@id/nav_daily_tasks" />
+    </fragment>
+    <fragment
+        android:id="@+id/myListEditFragment"
+        android:name="com.example.organizerapp.ui.myLists.MyListEditFragment"
+        android:label="MyListEditFragment" >
+        <action
+            android:id="@+id/action_myListEditFragment_to_nav_my_list"
+            app:destination="@id/nav_my_list" />
+    </fragment>
 
 
 </navigation>

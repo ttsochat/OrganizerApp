@@ -24,4 +24,6 @@
     <string name="menu_calendar">Calendar</string>
     <string name="menu_tomato_stats">Tomato Stats</string>
     <string name="tomato_stats">Tomato Stats</string>
+    <string name="title">Title</string>
+    <string name="list">List</string>
 </resources>
