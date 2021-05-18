@@ -25,4 +25,5 @@
     <string name="menu_tomato_stats">Tomato Stats</string>
     <string name="tomato_stats">Tomato Stats</string>
     <string name="email">Email</string>
+    <string name="log_out">Log out</string>
 </resources>
