@@ -2,9 +2,7 @@ package com.example.organizerapp.ui.myLists
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -20,11 +18,10 @@ class MyListsFragment : Fragment() {
 
     private lateinit var myListsViewModel: MyListsViewModel
     private var _binding: FragmentMyListsBinding? = null
-
+    private val myAdapter = MyListsAdapter{ list -> onClick(list)}
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 
 
     override fun onCreateView(
@@ -32,20 +29,23 @@ class MyListsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         myListsViewModel =
             ViewModelProvider(this).get(MyListsViewModel::class.java)
 
         _binding = FragmentMyListsBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
 
 
-        val myAdapter = MyListsAdapter{ list -> onClick(list)}
+
+
         val recyclerView: RecyclerView = _binding!!.recyclerView
 
-        println("before ")
+        //view model observer and adapter submit list!!
         myListsViewModel.getLists().observe(viewLifecycleOwner) {
              myAdapter.submitList(it)
-            println("after submit")
+
         }
 
         recyclerView.adapter = myAdapter
@@ -70,10 +70,20 @@ class MyListsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        println( "oncon" + item.itemId.toLong())
+        myListsViewModel.removeItemFromList(item.itemId.toLong())
+        return super.onContextItemSelected(item)
+
+    }
+
+    //navigate to myListEditFragment
     private fun onClick(list: Lists){
         val bundle = Bundle()
             bundle.putLong("listId", list.id)
         view?.let { Navigation.findNavController(it).navigate(R.id.action_nav_my_list_to_myListEditFragment, bundle) }
     }
+
+
 
 }

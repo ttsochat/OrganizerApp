@@ -56,12 +56,12 @@ class MyListEditFragment: Fragment() {
         }
 
 
-
-
         binding.listDoneImageButton.setOnClickListener {
             Navigation.findNavController(root)
                 .navigate(R.id.action_myListEditFragment_to_nav_my_list)
         }
+
+
         return root
     }
 

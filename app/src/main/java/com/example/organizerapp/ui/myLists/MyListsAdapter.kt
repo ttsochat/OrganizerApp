@@ -1,9 +1,7 @@
 package com.example.organizerapp.ui.myLists
 
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
@@ -11,8 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 
+
 class MyListsAdapter ( private val onClick: (Lists) -> Unit):
-    ListAdapter<Lists, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack) {
+    ListAdapter<Lists, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack)  {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListsViewHolder {
@@ -26,8 +25,14 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
 
     }
 
+    fun removeItem(pos: Int){
+        this.currentList.removeAt(pos)
+        notifyDataSetChanged()
+    }
 
-    class ListsViewHolder(cardView : View, val onClick: (Lists) -> Unit) : RecyclerView.ViewHolder(cardView) {
+    //View Holder
+    class ListsViewHolder(cardView : View, val onClick: (Lists) -> Unit) : RecyclerView.ViewHolder(cardView) ,
+        View.OnCreateContextMenuListener {
 
         val  title: TextView = cardView.findViewById(R.id.card_list_title)
         val lists: TextView = cardView.findViewById(R.id.card_list_text)
@@ -36,6 +41,7 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
 
         //click listener for card view
         init {
+            cardView.setOnCreateContextMenuListener(this)
             cardView.setOnClickListener {
                 currentList?.let {
                     onClick(it)
@@ -48,7 +54,26 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
             title.text = list.title
             lists.text = list.list.toString()
         }
+
+
+        //attach context menu
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+
+             currentList?.id?.toInt()?.let {
+                 menu?.add(this.adapterPosition,
+                     it, 111, "Delete List")
+             }
+
+        }
+
+
     }
+
+
 }
 
 object ListsDiffCallBack: DiffUtil.ItemCallback<Lists>(){

@@ -1,6 +1,5 @@
 package com.example.organizerapp.ui.myLists
 
-import android.icu.util.UniversalTimeScale.toLong
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,9 @@ class MyListsViewModel : ViewModel() {
 
     private val listtest = Lists("food", listOf("spaggeti","creap","klpgfgfgfghfhfhfhfhfhfghfgfghfghhfhffhfghfhgfhgfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghhhhhhhhhhhhhhhhhhhhhhh"), 1 )
     private val listtest2 = Lists("Snack", listOf("banana","mushroom","coca cola"), 2 )
-    private val listtest3 = Lists("Favorite Movies", listOf("spaggeti","creap","klpgfgfgfghfhfhfhfhfhfghfgfghfghhfhffhfghfhgfhgfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghhhhhhhhhhhhhhhhhhhhhhh"), 1 )
-    private val lists = MutableLiveData<List<Lists>>(listOf(listtest,listtest2))
+    private val listtest3 = Lists("Favorite Movies", listOf("spaggeti","creap","klpgfgfgfghfhfhfhfhfhfghfgfghfghhfhffhfghfhgfhgfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghhhhhhhhhhhhhhhhhhhhhhh"), 3 )
+    private val lala = listOf<Lists>(listtest,listtest2,listtest3)
+    private var lists = MutableLiveData(lala)
 
 
 //    private val lists: MutableLiveData<List<Lists>> by lazy {
@@ -20,11 +20,11 @@ class MyListsViewModel : ViewModel() {
 //
 //    }
 
-    fun getLists(): LiveData<List<Lists>>{
-        print("getlists" + lists.value?.size)
-        return lists //edw epistrefei null
-    }
 
+    //return lists
+    fun getLists(): LiveData<List<Lists>>{
+        return lists
+    }
 
 
     private fun loadLists(): LiveData<List<Lists>> {
@@ -39,10 +39,7 @@ class MyListsViewModel : ViewModel() {
             1
         )
         val listOfLists = listOf(oneLists)
-        println("listoflists" + listOfLists.size)
-        val mutavle = MutableLiveData(listOfLists)
-        println("mutavle" + mutavle.value?.size)
-        return mutavle
+        return MutableLiveData(listOfLists)
     }
 
     fun getCurrentListFromId(id: Long): Lists {
@@ -54,7 +51,15 @@ class MyListsViewModel : ViewModel() {
 
     }
 
+    fun removeItemFromList(long: Long) {
+        lists.value = lists.value?.toMutableList()?.apply {
+            println("remove" + listtest.id)
 
+            remove(lala.find{
+                it.id == long
+            })
+        }
 
+    }
 
 }
