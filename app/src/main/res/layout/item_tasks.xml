@@ -9,8 +9,6 @@
         android:id="@+id/taskCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp">
@@ -32,7 +30,8 @@
                 android:layout_height="35dp"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:layout_gravity="center_vertical|end"
-                android:src="@drawable/edit_icon"/>
+                android:src="@drawable/edit_icon"
+                android:clickable="true"/>
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 

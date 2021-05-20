@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 
- class TaskAdapter(private val tasks : List<Task>, private val listener: OnTaskClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+ class DailyTasksAdapter(private val tasks : MutableList<Task>, private val listener: OnTaskClickListener) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
+     var archivedTasks = mutableListOf<Task>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item_tasks, parent, false)
@@ -26,15 +28,31 @@ import com.example.organizerapp.R
         holder.textOfTask?.text = task.text
     }
 
+     fun deleteItem(index: Int){
+         tasks.removeAt(index)
+         notifyDataSetChanged()
+     }
+
+     fun archiveItem(index: Int){
+         archivedTasks.add(tasks[index])
+         tasks.removeAt(index)
+         notifyDataSetChanged()
+     }
+
+     fun archivedTasksSize(): Int {
+         val howMany = archivedTasks.size
+         return howMany
+     }
+
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
     View.OnClickListener{
         var textOfTask: TextView?
-        var iconOfEdit: ImageView?
+        val iconOfEdit: ImageView?
 
         init {
-            itemView.setOnClickListener(this)
             textOfTask = itemView.findViewById<TextView>(R.id.taskText)
             iconOfEdit = itemView.findViewById<ImageView>(R.id.editIcon)
+            iconOfEdit.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -48,4 +66,5 @@ import com.example.organizerapp.R
      interface OnTaskClickListener{
          fun onTaskClick(position: Int)
      }
+
 }
