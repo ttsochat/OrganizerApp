@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.ListDetailsBinding
+import kotlin.random.Random
 
 class MyListEditFragment: Fragment() {
 
@@ -19,12 +20,16 @@ class MyListEditFragment: Fragment() {
     private lateinit var binding: ListDetailsBinding
     private var listId : Long = -1
     private val defaultId : Long = -1
+    private lateinit var currentTitle: String
+    private lateinit var currentList: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getLong("listId")?.let { lId ->
             this.listId = lId
         }
+
+
     }
 
     override fun onCreateView(
@@ -41,10 +46,11 @@ class MyListEditFragment: Fragment() {
 
         if(listId != defaultId){
             binding.editTextTitle.setText(myListEditViewModel.getCurrentListFromId(listId).title)
-            binding.editTextList.setText(myListEditViewModel.getCurrentListFromId(listId).list.toString())
+            binding.editTextList.setText(myListEditViewModel.getCurrentListFromId(listId).list)
         }
 
-        binding.editTextList.imeOptions = EditorInfo.IME_ACTION_NEXT
+       // binding.editTextList.imeOptions = EditorInfo.IME_ACTION_NEXT
+
         //an mporesv na brw editorimfo gia allagh gragmhs!
         binding.editTextList.setOnEditorActionListener{ v, actionId, event ->
             if( actionId == EditorInfo.IME_FLAG_NO_ENTER_ACTION){
@@ -56,9 +62,18 @@ class MyListEditFragment: Fragment() {
         }
 
 
+
         binding.listDoneImageButton.setOnClickListener {
+            currentTitle = binding.editTextTitle.text.toString()
+            currentList = binding.editTextList.text.toString()
+            val bundle = Bundle()
+            bundle.putString("title", currentTitle)
+            bundle.putString("list", currentList)
+            bundle.putLong("id", Random.nextLong())
+            myListEditViewModel.addItemToList(Lists(currentTitle, currentList, Random.nextLong()))
+
             Navigation.findNavController(root)
-                .navigate(R.id.action_myListEditFragment_to_nav_my_list)
+                .navigate(R.id.action_myListEditFragment_to_nav_my_list, bundle)
         }
 
 

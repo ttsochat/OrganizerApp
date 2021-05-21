@@ -25,10 +25,10 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
 
     }
 
-    fun removeItem(pos: Int){
-        this.currentList.removeAt(pos)
-        notifyDataSetChanged()
-    }
+//    fun removeItem(pos: Int){
+//        this.currentList.removeAt(pos)
+//        notifyDataSetChanged()
+//    }
 
     //View Holder
     class ListsViewHolder(cardView : View, val onClick: (Lists) -> Unit) : RecyclerView.ViewHolder(cardView) ,
@@ -52,7 +52,7 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
         fun connect(list : Lists){
             currentList = list
             title.text = list.title
-            lists.text = list.list.toString()
+            lists.text = list.list
         }
 
 
