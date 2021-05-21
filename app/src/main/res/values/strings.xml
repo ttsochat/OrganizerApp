@@ -22,9 +22,9 @@
     <string name="menu_calendar">Calendar</string>
     <string name="menu_tomato_stats">Tomato Stats</string>
     <string name="tomato_stats">Tomato Stats</string>
-    <string name="email">Email</string>
     <string name="log_out">Log out</string>
     <string name="welcome_thank_you_for_registering">Welcome, thank you for registering!</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
 </resources>
