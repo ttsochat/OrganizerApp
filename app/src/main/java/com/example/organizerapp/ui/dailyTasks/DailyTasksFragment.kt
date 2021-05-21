@@ -3,6 +3,7 @@ package com.example.organizerapp.ui.dailyTasks
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.appcompat.view.menu.MenuView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,12 +29,9 @@ import org.w3c.dom.Text
 
 class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
 
-    private lateinit var galleryDailyTasksViewModel: DailyTasksViewModel
+    private lateinit var viewModel: DailyTasksViewModel
     private var _binding: FragmentDailyTasksBinding? = null
-    var task1 = Task("task 1")
-    var task2 = Task("task 2")
-    var task3 = Task("task 3")
-    private var allTasks = mutableListOf<Task>(task1, task2, task3)
+
     //val firebaseDatabase = FirebaseDataBase.getInstance()
 
     // This property is only valid between onCreateView and
@@ -44,14 +43,14 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryDailyTasksViewModel =
+        viewModel =
             ViewModelProvider(this).get(DailyTasksViewModel::class.java)
 
         _binding = FragmentDailyTasksBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
-        val adapter = DailyTasksAdapter(allTasks, this)
+        val adapter = DailyTasksAdapter(viewModel.getTasks(), this)
 
         val recyclerView: RecyclerView = binding.tasksRecycler
 
@@ -64,14 +63,23 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         //set clicklistener for info
         info.setOnClickListener{
 //            info.tooltiptext = "Swipe finished tasks right to delete & unfinished tasks left to save for later"
-//            Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
+             Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
 
         }
 
         val swipeDelete = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.deleteItem(viewHolder.adapterPosition)
-                Toast.makeText(context, "Task deleted", Toast.LENGTH_SHORT).show()
+                val position : Int = viewHolder.bindingAdapterPosition
+                val deletedTask : Task = viewModel.getTasks()[position]
+                viewModel.getTasks().removeAt(position)
+                adapter.notifyItemRemoved(position)
+                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") { _ ->
+                        viewModel.getTasks().add(position, deletedTask)
+                        adapter.notifyItemInserted(position)
+
+                    }
+                    .show()
             }
         }
 
@@ -80,14 +88,22 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
 
         val swipeArchive = object : SwipeToArchive(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.archiveItem(viewHolder.adapterPosition)
-                Toast.makeText(context, "Task archived, archived tasks: ${adapter.archivedTasksSize()}", Toast.LENGTH_SHORT).show()
+                val position : Int = viewHolder.bindingAdapterPosition
+                val archivedTask : Task = viewModel.getTasks()[position]
+                adapter.archiveItem(viewHolder.bindingAdapterPosition)
+                Snackbar.make(recyclerView, "It's okay, you can do it tomorrow", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") { _ ->
+                        viewModel.getTasks().add(position, archivedTask)
+                        adapter.notifyItemInserted(position)
+
+                    }
+                    .show()
             }
         }
         val touchHelper2 = ItemTouchHelper(swipeArchive)
         touchHelper2.attachToRecyclerView(recyclerView)
 
-        galleryDailyTasksViewModel.text.observe(viewLifecycleOwner, Observer {
+        viewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
         //Floating action button listener!
@@ -121,6 +137,8 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         builder.setView(view)
         builder.setPositiveButton("DONE") { _, _ ->
 //            forgotPassword(fp_email)
+            var newTask = Task(editText.text.toString())
+            viewModel.getTasks().add(newTask)
         }
         builder.setNegativeButton("CANCEL") { _, _ ->
         }
@@ -131,10 +149,10 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         builder.setTitle("Edit Task")
         val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
         val editText = view.findViewById<EditText>(R.id.edit_text)
-        editText.setText(allTasks[position].text)
+        editText.setText(viewModel.getTasks()[position].text)
         builder.setView(view)
         builder.setPositiveButton("DONE") { _, _ ->
-            allTasks[position].text = editText.text.toString()
+            viewModel.getTasks()[position].text = editText.text.toString()
         }
         builder.setNegativeButton("CANCEL") { _, _ ->
         }
