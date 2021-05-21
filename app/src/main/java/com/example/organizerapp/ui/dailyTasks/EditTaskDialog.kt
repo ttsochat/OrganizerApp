@@ -15,21 +15,22 @@ class EditTaskDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        val inflater = activity?.layoutInflater
-        val view = inflater?.inflate(R.layout.edit_task_dialog, null)
+//        val inflater = activity?.layoutInflater
+        val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
+        val editText = view.findViewById<EditText>(R.id.edit_text)
         builder.setView(view)
                 .setTitle("Edit Task")
-                .setNegativeButton("cancel", DialogInterface.OnClickListener(){ dialogInterface: DialogInterface, i: Int ->
+                .setPositiveButton("OK", DialogInterface.OnClickListener{_, _->
 
                 })
-                .setPositiveButton("OK", DialogInterface.OnClickListener(){ dialogInterface: DialogInterface, i: Int ->
+                .setNegativeButton("CLOSE", DialogInterface.OnClickListener(){_, _->
 
                 })
 
         builder.show()
-        if (view != null) {
-            editTask = view.findViewById(R.id.edit_text)
-        }
+//        if (view != null) {
+//            editTask = view.findViewById(R.id.edit_text)
+//        }
 
         return builder.create()
     }

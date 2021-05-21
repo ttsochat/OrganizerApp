@@ -47,16 +47,16 @@ import com.example.organizerapp.R
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
     View.OnClickListener{
         var textOfTask: TextView?
-        val iconOfEdit: ImageView?
+        val editIcon: ImageView?
 
         init {
             textOfTask = itemView.findViewById<TextView>(R.id.taskText)
-            iconOfEdit = itemView.findViewById<ImageView>(R.id.editIcon)
-            iconOfEdit.setOnClickListener(this)
+            editIcon = itemView.findViewById<ImageView>(R.id.editIcon)
+            editIcon.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            val position: Int = absoluteAdapterPosition
+            val position: Int = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onTaskClick(position)
             }
