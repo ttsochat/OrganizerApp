@@ -17,4 +17,8 @@ class DailyTasksViewModel : ViewModel() {
     fun getTasks(): MutableList<Task> {
         return allTasks
     }
+
+    fun setTaskText(postion : Int, text : String){
+        allTasks[postion].text = text
+    }
 }

@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.view.menu.MenuView
 import androidx.fragment.app.DialogFragment
@@ -25,12 +22,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentDailyTasksBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.NonCancellable.cancel
 import org.w3c.dom.Text
 
 class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
 
     private lateinit var viewModel: DailyTasksViewModel
     private var _binding: FragmentDailyTasksBinding? = null
+    private lateinit var adapter: DailyTasksAdapter
 
     //val firebaseDatabase = FirebaseDataBase.getInstance()
 
@@ -50,9 +49,9 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
 
         val root: View = binding.root
 
-        val adapter = DailyTasksAdapter(viewModel.getTasks(), this)
-
         val recyclerView: RecyclerView = binding.tasksRecycler
+
+        adapter = DailyTasksAdapter(viewModel.getTasks(), this)
 
         recyclerView.adapter = adapter
 
@@ -133,15 +132,25 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         builder.setTitle("New Task")
         val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
         val editText = view.findViewById<EditText>(R.id.edit_text)
+        val done = view.findViewById<Button>(R.id.done)
+        val cancel = view.findViewById<Button>(R.id.cancel)
         editText.hint = "Add your task here"
         builder.setView(view)
-        builder.setPositiveButton("DONE") { _, _ ->
-//            forgotPassword(fp_email)
+        val ad : AlertDialog = builder.show()
+        done.setOnClickListener{
             var newTask = Task(editText.text.toString())
             viewModel.getTasks().add(newTask)
+            ad.dismiss()
         }
-        builder.setNegativeButton("CANCEL") { _, _ ->
+        cancel.setOnClickListener{
+            ad.dismiss()
         }
+//        builder.setPositiveButton("DONE") { _, _ ->
+//            var newTask = Task(editText.text.toString())
+//            viewModel.getTasks().add(newTask)
+//        }
+//        builder.setNegativeButton("CANCEL") { _, _ ->
+//        }
         builder.show()
     }
     private fun editTaskDialog(position: Int){
@@ -149,13 +158,26 @@ class DailyTasksFragment : Fragment(),  DailyTasksAdapter.OnTaskClickListener{
         builder.setTitle("Edit Task")
         val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
         val editText = view.findViewById<EditText>(R.id.edit_text)
+        val done = view.findViewById<Button>(R.id.done)
+        val cancel = view.findViewById<Button>(R.id.cancel)
         editText.setText(viewModel.getTasks()[position].text)
         builder.setView(view)
-        builder.setPositiveButton("DONE") { _, _ ->
-            viewModel.getTasks()[position].text = editText.text.toString()
+        val ad : AlertDialog = builder.show()
+        done.setOnClickListener {
+            viewModel.setTaskText(position, editText.text.toString())
+            adapter.notifyDataSetChanged()
+            ad.dismiss()
+
         }
-        builder.setNegativeButton("CANCEL") { _, _ ->
+//        builder.setPositiveButton("DONE") { _, _ ->
+//            viewModel.setTaskText(position, editText.text.toString())
+//            adapter.notifyDataSetChanged()
+//        }
+//        builder.setNegativeButton("CANCEL") { _, _ ->
+//        }
+        cancel.setOnClickListener{
+            ad.dismiss()
         }
-        builder.show()
+//        builder.show()
     }
 }
