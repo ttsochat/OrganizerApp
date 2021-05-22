@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 
  class DailyTasksAdapter(private val tasks : MutableList<Task>, private val listener: OnTaskClickListener) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
-     var archivedTasks = mutableListOf<Task>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item_tasks, parent, false)
@@ -31,17 +30,6 @@ import com.example.organizerapp.R
      fun deleteItem(index: Int){
          tasks.removeAt(index)
          notifyDataSetChanged()
-     }
-
-     fun archiveItem(index: Int){
-         archivedTasks.add(tasks[index])
-         tasks.removeAt(index)
-         notifyDataSetChanged()
-     }
-
-     fun archivedTasksSize(): Int {
-         val howMany = archivedTasks.size
-         return howMany
      }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
