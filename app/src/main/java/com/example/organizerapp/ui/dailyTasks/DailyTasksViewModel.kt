@@ -22,13 +22,41 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
     var task2 = Task("task 2")
     var task3 = Task("task 3")
     var allTasks = mutableListOf<Task>(task1, task2, task3)
-    private val _text = MutableLiveData<String>().apply {
-        value = "No tasks yet"
+    var archivedTasks = mutableListOf<Task>()
+//    private val _text = MutableLiveData<String>().apply {
+//        value = "No tasks yet"
+//    }
+//    val text: LiveData<String> = _text
+    fun addNewTask(task : Task){
+        allTasks.add(task)
     }
-    val text: LiveData<String> = _text
+    fun addTaskToSpecificPosition(position : Int, task : Task){
+        allTasks.add(position, task)
+    }
 
     fun getTasks(): MutableList<Task> {
         return allTasks
+    }
+    fun getSpecificTask(position : Int) : Task {
+        return allTasks[position]
+    }
+
+    fun setTaskText(position : Int, text : String){
+        allTasks[position].text = text
+    }
+
+    fun removeTask(position: Int){
+        allTasks.removeAt(position)
+    }
+
+    fun archiveItem(index: Int){
+        archivedTasks.add(allTasks[index])
+        allTasks.removeAt(index)
+    }
+
+    fun archivedTasksSize(): Int {
+        val howMany = archivedTasks.size
+        return howMany
     }
 
     private val readAllData: LiveData<List<DailyTask>>
@@ -57,5 +85,4 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
     fun getAllDailyTasks(): List<DailyTask>{
         return repository.getAllDailyTasks()
     }
-
 }

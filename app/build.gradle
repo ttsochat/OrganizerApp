@@ -10,15 +10,15 @@ apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.2'
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.example.organizerapp"
-        minSdkVersion 26
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,7 +37,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = '1.8'
     }
     buildFeatures {
         viewBinding true
@@ -45,11 +45,7 @@ android {
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
 
     }
-
 }
-
-
-
 
 dependencies {
     // Navigation Component
@@ -86,11 +82,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.recyclerview:recyclerview:1.2.0"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-firestore:23.0.0'
-    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-
 }
