@@ -11,16 +11,25 @@ import com.example.organizerapp.db.entities.DailyTask
 import com.example.organizerapp.db.entities.User
 import com.example.organizerapp.db.repositories.DailyTaskRepository
 import com.example.organizerapp.db.repositories.UserRepository
+import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class DailyTasksViewModel(application: Application): AndroidViewModel(application) {
 
+    var task1 = Task("task 1")
+    var task2 = Task("task 2")
+    var task3 = Task("task 3")
+    var allTasks = mutableListOf<Task>(task1, task2, task3)
     private val _text = MutableLiveData<String>().apply {
-        value = "This is daily tasks Fragment"
+        value = "No tasks yet"
     }
     val text: LiveData<String> = _text
+
+    fun getTasks(): MutableList<Task> {
+        return allTasks
+    }
 
     private val readAllData: LiveData<List<DailyTask>>
     private val repository: DailyTaskRepository

@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+
         binding.login.setOnClickListener{
             doLogin()
         }
