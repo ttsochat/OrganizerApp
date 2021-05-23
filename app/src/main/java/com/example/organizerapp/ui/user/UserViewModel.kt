@@ -1,4 +1,4 @@
-package com.example.organizerapp.db.views
+package com.example.organizerapp.ui.user
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -14,13 +14,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 import com.example.organizerapp.databinding.ActivityNavigationBinding
-import com.example.organizerapp.db.AppDatabase
-import com.example.organizerapp.db.views.UserViewModel
+import com.example.organizerapp.ui.user.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.concurrent.thread
 
 
 class NavigationActivity : AppCompatActivity() {

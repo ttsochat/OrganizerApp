@@ -10,11 +10,11 @@ import com.example.organizerapp.db.dao.UserDao
 import com.example.organizerapp.db.entities.DailyTask
 import com.example.organizerapp.db.entities.User
 
-@Database(entities = arrayOf(User::class, DailyTask::class), version = 2, exportSchema = false)
+@Database(entities = arrayOf(User::class, DailyTask::class), version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
-//    abstract fun dailyTaskDao() : DailyTaskDao
+    abstract fun dailyTaskDao() : DailyTaskDao
 
     companion object {
 

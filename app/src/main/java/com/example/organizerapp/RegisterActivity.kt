@@ -6,15 +6,11 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
 import com.example.organizerapp.databinding.ActivityRegisterBinding
-import com.example.organizerapp.db.AppDatabase
 import com.example.organizerapp.db.entities.User
-import com.example.organizerapp.db.views.UserViewModel
+import com.example.organizerapp.ui.user.UserViewModel
 import com.google.firebase.auth.*
-import kotlin.concurrent.thread
 
 
 class RegisterActivity : AppCompatActivity() {
