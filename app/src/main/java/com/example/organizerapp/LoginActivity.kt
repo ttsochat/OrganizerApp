@@ -9,10 +9,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.room.Room
 import com.example.organizerapp.databinding.ActivityMainBinding
 import com.example.organizerapp.databinding.ActivityRegisterBinding
+import com.example.organizerapp.db.AppDatabase
+import com.example.organizerapp.db.entities.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlin.concurrent.thread
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
