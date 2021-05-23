@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#94b19c"
+            android:background="@color/PrimaryColor"
             app:title="OrganizerApp"
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             app:titleTextColor="@color/white"

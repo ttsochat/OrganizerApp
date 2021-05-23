@@ -14,23 +14,23 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.04"
-        app:layout_constraintVertical_chainStyle="spread"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintVertical_bias="0.288"
+        app:layout_constraintVertical_chainStyle="spread">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints=""
             android:background="@drawable/border"
             android:ems="10"
-            android:hint="@string/username"
+            android:hint="@string/email"
             android:inputType="textPersonName"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColorHint="#8A8888"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="visible" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -41,10 +41,9 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername"
-        app:layout_constraintVertical_bias="0.621"
+        app:layout_constraintVertical_bias="0.518"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/PrimaryColor"
-        tools:ignore="MissingConstraints">
+        app:passwordToggleTint="@color/PrimaryColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -57,7 +56,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColorHint="#FF8A8888"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/register"
@@ -71,8 +71,10 @@
         android:id="@+id/login"
         android:layout_width="327dp"
         android:layout_height="59dp"
+        android:background="#00FFFFFF"
         android:text="@string/log_in"
-        app:backgroundTint="#94B19C"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/PrimaryColor"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.529"
@@ -94,14 +96,14 @@
         app:backgroundTint="#00FFFFFF"
         app:iconTint="#00FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/signup"
+        app:layout_constraintEnd_toStartOf="@+id/register"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="0.888" />
 
     <Button
-        android:id="@+id/signup"
+        android:id="@+id/register"
         android:layout_width="140dp"
         android:layout_height="51dp"
         android:background="@drawable/button_border"
@@ -165,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="219dp" />
+        app:layout_constraintGuide_begin="200dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -187,6 +189,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="110dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
