@@ -12,14 +12,13 @@ interface DailyTaskDao {
     @Query("SELECT * FROM daily_task")
     fun readAllData(): LiveData<List<DailyTask>>
 
-    @Query("SELECT * FROM daily_task")
-    fun getAllDailyTasks(): List<DailyTask>
-
     @Query("SELECT * FROM daily_task WHERE user_id IN (:userId)")
-    fun getDailyTasksByUserId(userId: String): List<DailyTask>
+    fun getDailyTasksByUserId(userId: String): LiveData<List<DailyTask>>
+
+    @Query("SELECT Count(*) FROM daily_task WHERE user_id IN (:userId)")
+    fun getNumberOfDailyTasksByUserId(userId: String): Int
 
     @Query("SELECT * FROM daily_task WHERE dtid = (:dailyTaskId)")
     fun getDailyTaskById(dailyTaskId: Int): DailyTask
-
 
 }

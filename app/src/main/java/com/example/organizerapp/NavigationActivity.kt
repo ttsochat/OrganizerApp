@@ -55,7 +55,7 @@ class NavigationActivity : AppCompatActivity() {
         //to update fragment when menu item selected
         navView.setupWithNavController(navController)
 
-        showToast("Welcome"+ mUserViewModel.getUserById(auth.currentUser.uid)?.username.toString())
+        showToast("Welcome " + mUserViewModel.getUserById(auth.currentUser.uid)?.username.toString() + "!")
     }
 
     fun showToast(toast: String?) {

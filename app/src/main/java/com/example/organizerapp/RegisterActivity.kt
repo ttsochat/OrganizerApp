@@ -17,7 +17,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityRegisterBinding
-    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+    private val emailPattern1 = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+    private val emailPattern2 = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+"
     private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.username.requestFocus()
             return
         }
-        if(!binding.email.text.toString().trim().matches(emailPattern.toRegex())){
+        if(!binding.email.text.toString().trim().matches(emailPattern1.toRegex()) && !binding.email.text.toString().trim().matches(emailPattern2.toRegex())){
             showToast("Invalid email")
             binding.email.requestFocus()
             return
