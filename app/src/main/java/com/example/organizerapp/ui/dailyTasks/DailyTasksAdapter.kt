@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.db.entities.DailyTask
 
-class DailyTasksAdapter(dailyTasksByUserIdLive: Any?, dailyTasksFragment: DailyTasksFragment) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
+class DailyTasksAdapter(dailyTasksByUserId: Any?, dailyTasksFragment: DailyTasksFragment) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
 
     private var dailyTaskList = emptyList<DailyTask>()
 

@@ -51,13 +51,15 @@ class DailyTasksFragment : Fragment(){
         adapter = DailyTasksAdapter(viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid), this)
 
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
-        viewDailyTasksModel.readAllData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
+        viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
             adapter.setData(dailyTasks)
+            tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
         })
+
         recyclerView.adapter = adapter
 
         emptyFragmentMessage = binding.noTasksText
-        tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
+        //tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
 
         val info = binding.info
 
