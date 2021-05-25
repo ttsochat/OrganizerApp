@@ -1,6 +1,7 @@
 package com.example.organizerapp.ui.tomatoStats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.organizerapp.databinding.FragmentTomatoStatsBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class TomatoStatsFragment : Fragment() {
 
     private lateinit var tomatoStatsViewModel: TomatoStatsViewModel
     private var _binding: FragmentTomatoStatsBinding? = null
+    private lateinit var auth: FirebaseAuth
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,6 +37,12 @@ class TomatoStatsFragment : Fragment() {
         tomatoStatsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, Observer { dailyStats ->
+            for(dailyStat in dailyStats)
+                Log.e("GAY CUNT", "Entry: " + dailyStat)
+        })
+
         return root
     }
 
