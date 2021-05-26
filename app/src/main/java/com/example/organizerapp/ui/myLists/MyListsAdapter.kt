@@ -2,16 +2,16 @@ package com.example.organizerapp.ui.myLists
 
 
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 
 
-class MyListsAdapter ( private val onClick: (Lists) -> Unit):
-    ListAdapter<Lists, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack)  {
+class MyListsAdapter (private val onClick: (Lists) -> Unit):
+    ListAdapter<Lists, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListsViewHolder {
@@ -25,18 +25,14 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
 
     }
 
-//    fun removeItem(pos: Int){
-//        this.currentList.removeAt(pos)
-//        notifyDataSetChanged()
-//    }
 
     //View Holder
     class ListsViewHolder(cardView : View, val onClick: (Lists) -> Unit) : RecyclerView.ViewHolder(cardView) ,
         View.OnCreateContextMenuListener {
 
-        val  title: TextView = cardView.findViewById(R.id.card_list_title)
-        val lists: TextView = cardView.findViewById(R.id.card_list_text)
-        val  constraintLayout: ConstraintLayout = cardView.findViewById(R.id.my_list_item_layout)
+        private val  title: TextView = cardView.findViewById(R.id.card_list_title)
+        private val lists: TextView = cardView.findViewById(R.id.card_list_text)
+        val  layout: LinearLayout = cardView.findViewById(R.id.my_list_item_layout)
         private var currentList: Lists? = null
 
         //click listener for card view
@@ -62,19 +58,17 @@ class MyListsAdapter ( private val onClick: (Lists) -> Unit):
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-
-             currentList?.id?.toInt()?.let {
+             currentList?.id?.let {
                  menu?.add(this.adapterPosition,
                      it, 111, "Delete List")
              }
-
         }
-
 
     }
 
 
 }
+
 
 object ListsDiffCallBack: DiffUtil.ItemCallback<Lists>(){
     override fun areItemsTheSame(oldItem: Lists, newItem: Lists): Boolean {

@@ -27,7 +27,7 @@
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
+    <string name="delete">Delete List</string>
     <string name="title">Title</string>
     <string name="list">List</string>
-    <string name="delete">Delete List</string>
 </resources>
