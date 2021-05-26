@@ -1,5 +1,6 @@
 package com.example.organizerapp.ui.myLists
 
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -7,90 +8,71 @@ import androidx.lifecycle.ViewModel
 
 class MyListsViewModel : ViewModel() {
 
-    private val listtest = Lists("food", "spaggeti creap klpgfgfgfghfhfhfhfhfhfghfgfghfghhfhffhfghf" +
-            "hgfhgfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghhhhhhhhhhhhhhhhhhhhhhh", 1 )
-    private val listtest2 = Lists("Snack", "banana mushroom  coca cola", 2 )
-    private val listtest3 = Lists("Favorite Movies", "makaroni xelidoni  sakoyla", 3 )
-////   private var lala = listOf<Lists>(listtest,listtest2,listtest3)
-////   private var lala : List<Lists> = emptyList()
-//    private var lala = mutableListOf(listtest,listtest2,listtest3)
-//    private lateinit var lists : MutableLiveData<List<Lists>>
-//    private lateinit var localList : MutableList<Lists>
-
-    private val localList = listOf(listtest,listtest2,listtest3)
-    private val lists = MutableLiveData(localList)
-//    private val lists: MutableLiveData<List<Lists>> by lazy {
-//        MutableLiveData<List<Lists>>().also {
-//            loadLists()
-//        }
-//
-//    }
+    private var lists = MutableLiveData<List<Lists>>()
+    var tsingkoslist : MutableList<Lists> = mutableListOf()
 
 
-    //return lists
-    fun getLists(): MutableLiveData<List<Lists>>{
-        println("lists size " + lists.value?.size)
-        return lists
+    init{
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",1))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",2))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",3))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",4))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",5))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",6))
+        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",7))
+        lists.value = tsingkoslist
+
+    }
+
+    fun getLists(): MutableLiveData<List<Lists>> {
+       return lists
     }
 
 
 
-    fun getCurrentListFromId(id: Long): Lists {
-
-        for(list in localList){
+    fun getCurrentListFromId(id: Int): Lists {
+        for(list in tsingkoslist){
             if(list.id == id){
                 return list
             }
-
         }
-        return Lists("","",0)
-
+        return Lists()
     }
 
-    fun removeItemFromList(long: Long) {
-        localList.toMutableList().remove(localList)
-        lists.value = lists.value?.toMutableList()?.apply {
 
-            remove(localList.find{
-                it.id == long
-            })
 
+    fun removeItemFromList(id: Int) {
+        var l = Lists()
+        for(list in tsingkoslist){
+            if(list.id == id){
+                l = list
+            }
         }
-
+        tsingkoslist.remove(l)
+        lists.value = tsingkoslist
     }
 
     fun addItemToList(newList: Lists){
-
-        val currentList = lists.value
-        if(currentList == null){
-            lists.postValue(listOf(newList))
-        }else {
-            val updateList = currentList.toMutableList()
-            updateList.add(newList)
-            lists.postValue(updateList)
-        }
-//      lists.value = lists.value?.toMutableList()?.apply {
-//
-//          this.add(newList)
-//      }
-        
+        tsingkoslist.add(newList)
+        lists.value = tsingkoslist
+        println("tsingos size="+tsingkoslist.size + " lists size=" + lists.value)
     }
 
 
-//    private fun loadLists(): LiveData<List<Lists>> {
-//        println("load lists")
-//        val oneLists = Lists(
-//            "Food",
-//            listOf(
-//                "spaggeti",
-//                "creap",
-//                "klpgfgfgfghfhfhfhfhfhfghfgfghfghhfhffhfghfhgfhgfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghhhhhhhhhhhhhhhhhhhhhhh"
-//            ),
-//            1
-//        )
-//        val listOfLists = listOf(oneLists)
-//        return MutableLiveData(listOfLists)
-//    }
+    fun updateList(newTitle: String, newList: String, id: Int){
+       for(list in tsingkoslist){
+           if(list.id == id){
+               println("inside if")
+               list.title = newTitle
+               list.list = newList
+           }
+       }
+        lists.value = tsingkoslist
+    }
+
+
+
+
 }
 
 

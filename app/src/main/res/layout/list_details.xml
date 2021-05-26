@@ -19,19 +19,19 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginBottom="6dp"
-            android:layout_marginTop="4dp"
-            android:padding="15dp"
-            android:ems="10"
-            android:hint="@string/title"
             android:background="@drawable/border"
+            android:ems="10"
+            android:gravity="start"
+            android:hint="@string/title"
             android:inputType="textMultiLine"
             android:maxLines="3"
             android:minLines="1"
-            android:textSize="30dp"
-            android:gravity="start"/>
+            android:padding="15dp"
+            android:textSize="30dp" />
 
         <ImageButton
             android:id="@+id/list_done_image_button"
@@ -46,7 +46,7 @@
             android:background="@drawable/border"
             app:layout_constraintStart_toEndOf="@+id/edit_text_title"
             app:srcCompat="@drawable/baseline_done_24"
-            android:contentDescription="TODO" />
+            android:contentDescription="Done Button for making new list" />
 
 
     </RelativeLayout>
