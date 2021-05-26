@@ -10,7 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.organizerapp.databinding.FragmentTomatoStatsBinding
+import com.example.organizerapp.db.Converters
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class TomatoStatsFragment : Fragment() {
 
@@ -39,9 +43,16 @@ class TomatoStatsFragment : Fragment() {
         })
         auth = FirebaseAuth.getInstance()
         tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
-            Log.e("GAY CUNT", "Entry incomming")
-            for(dailyStat in dailyStats)
-                Log.d("GAY CUNT", "Entry: " + dailyStat)
+            Log.d("GAY CUNT", "List size: " + dailyStats.size)
+            for(dailyStat in dailyStats) {
+                Log.d("GAY CUNT", dailyStat.toString())
+                Log.d("GAY CUNT", dailyStat.date.toString())
+            }
+
+//            var entries = HashMap<Date, Int>()
+//            for(dailyStat in dailyStats) {
+//                dailyStat.date.after()
+//            }
         })
 
         return root
