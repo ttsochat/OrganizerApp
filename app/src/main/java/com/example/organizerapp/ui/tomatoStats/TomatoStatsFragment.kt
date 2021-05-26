@@ -37,10 +37,11 @@ class TomatoStatsFragment : Fragment() {
         tomatoStatsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-
-        tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, Observer { dailyStats ->
+        auth = FirebaseAuth.getInstance()
+        tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
+            Log.e("GAY CUNT", "Entry incomming")
             for(dailyStat in dailyStats)
-                Log.e("GAY CUNT", "Entry: " + dailyStat)
+                Log.d("GAY CUNT", "Entry: " + dailyStat)
         })
 
         return root

@@ -21,6 +21,6 @@ interface DailyTaskDao {
     @Query("SELECT * FROM daily_task WHERE dtid = (:dailyTaskId)")
     fun getDailyTaskById(dailyTaskId: Int): DailyTask
 
-    @Query("SELECT count(*) AS 'COMPLETED', date FROM tasks WHERE status = 'DONE' AND user_id IN (:userId) GROUP By date")
+    @Query("SELECT count(*) AS 'dtid', date FROM daily_task WHERE status = 'DONE' AND user_id IN (:userId) GROUP By date")
     fun getDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>>
 }
