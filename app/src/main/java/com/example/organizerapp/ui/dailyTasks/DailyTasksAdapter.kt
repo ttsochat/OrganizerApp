@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.db.entities.DailyTask
 
-class DailyTasksAdapter(dailyTasksByUserId: Any?, dailyTasksFragment: DailyTasksFragment) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
+class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
 
     private var dailyTaskList = emptyList<DailyTask>()
 
     class DailyTasksViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -30,9 +29,6 @@ class DailyTasksAdapter(dailyTasksByUserId: Any?, dailyTasksFragment: DailyTasks
 
     fun setData(dailyTasks: List<DailyTask>){
         this.dailyTaskList = dailyTasks
-        for(dailyTask in dailyTasks){
-            Log.d("",dailyTask.description.toString())
-        }
         notifyDataSetChanged()
     }
 
@@ -45,7 +41,6 @@ class DailyTasksAdapter(dailyTasksByUserId: Any?, dailyTasksFragment: DailyTasks
 //         notifyDataSetChanged()
 //     }
 
-
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
     View.OnClickListener{
         var textOfTask: TextView? = itemView.findViewById<TextView>(R.id.taskText)
@@ -57,16 +52,14 @@ class DailyTasksAdapter(dailyTasksByUserId: Any?, dailyTasksFragment: DailyTasks
 
         override fun onClick(v: View?) {
             val position: Int = adapterPosition
-//            if (position != RecyclerView.NO_POSITION) {
-//                listener.onTaskClick(position)
-//            }
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onTaskClick(position)
+            }
         }
 
     }
     interface OnTaskClickListener{
          fun onTaskClick(position: Int)
     }
-
-
 
 }

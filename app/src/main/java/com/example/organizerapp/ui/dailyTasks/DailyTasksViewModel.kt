@@ -1,6 +1,7 @@
 package com.example.organizerapp.ui.dailyTasks
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.organizerapp.db.AppDatabase
 import com.example.organizerapp.db.dao.DailyTaskDao
@@ -10,23 +11,27 @@ import com.example.organizerapp.db.repositories.DailyTaskRepository
 import com.example.organizerapp.db.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class DailyTasksViewModel(application: Application): AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<DailyTask>>
     private val repository: DailyTaskRepository
+    private var dailyTaskList = emptyList<DailyTask>()
 
     init{
         val dailyTaskDao = AppDatabase.getInstance(application).dailyTaskDao()
         repository = DailyTaskRepository(dailyTaskDao)
-        readAllData = repository.readAllData
     }
 
     fun addDailyTask(dailyTask: DailyTask){
         viewModelScope.launch(Dispatchers.IO){
             repository.addDailyTask(dailyTask)
         }
+    }
+
+    fun setDailyTasksList(list: List<DailyTask>){
+        dailyTaskList=list
     }
 
     fun getDailyTasksByUserId(userId : String): LiveData<List<DailyTask>> {
@@ -40,6 +45,28 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
     fun getDailyTaskById(dailyTaskId : Int): DailyTask {
         return repository.getDailyTaskById(dailyTaskId)
     }
+
+    fun getSpecificTask(position : Int) : DailyTask {
+        return dailyTaskList[position]
+    }
+
+    fun setTaskText(position : Int, text : String, userId: String){
+        var updatedTask = DailyTask(dailyTaskList[position].dtid,text, dailyTaskList[position].date,dailyTaskList[position].status,1,userId)
+        dailyTaskList[position].description = text
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateDailyTask(updatedTask)
+        }
+    }
+
+    fun removeTask(position: Int){
+        var list = dailyTaskList.toMutableList()
+        list.removeAt(position)
+        dailyTaskList = list.toList()
+        for(t in dailyTaskList){
+            Log.d("Tag",t.description.toString())
+        }
+    }
+
 
 //    var task1 = Task("task 1")
 //    var task2 = Task("task 2")
@@ -61,13 +88,8 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
 //        return allTasks
 //    }
 //
-//    fun setTaskText(position : Int, text : String){
-//        allTasks[position].text = text
-//    }
 //
-//    fun removeTask(position: Int){
-//        allTasks.removeAt(position)
-//    }
+
 //
 //    fun archiveItem(index: Int){
 //        archivedTasks.add(allTasks[index])
@@ -79,7 +101,5 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
 //        return howMany
 //    }
 //
-//    fun getSpecificTask(position : Int) : Task {
-//        return allTasks[position]
-//    }
+
 }

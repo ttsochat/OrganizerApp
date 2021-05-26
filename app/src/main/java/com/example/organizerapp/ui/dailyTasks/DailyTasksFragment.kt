@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_daily_tasks.view.*
 import java.util.*
 
-class DailyTasksFragment : Fragment(){
+class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
     private lateinit var viewDailyTasksModel: DailyTasksViewModel
     private var _binding: FragmentDailyTasksBinding? = null
@@ -26,9 +26,9 @@ class DailyTasksFragment : Fragment(){
     private lateinit var auth: FirebaseAuth
 
     //val firebaseDatabase = FirebaseDataBase.getInstance()
-
     // This property is only valid between onCreateView and
     // onDestroyView.
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -48,10 +48,11 @@ class DailyTasksFragment : Fragment(){
         val view = inflater.inflate(R.layout.fragment_daily_tasks, container, false)
 
 //        val recyclerView = view.tasksRecycler
-        adapter = DailyTasksAdapter(viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid), this)
+        adapter = DailyTasksAdapter(this)
 
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
         viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
+            viewDailyTasksModel.setDailyTasksList(dailyTasks)
             adapter.setData(dailyTasks)
             tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
         })
@@ -72,13 +73,13 @@ class DailyTasksFragment : Fragment(){
 //        val swipeDelete = object : SwipeToDelete() {
 //            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 //                val position : Int = viewHolder.bindingAdapterPosition
-//                val deletedTask : Task = viewModel.getSpecificTask(position)
-//                viewModel.removeTask(position)
-//                tasksNumberUpdate(viewModel.getTasks().size)
+//                val deletedTask : DailyTask = viewDailyTasksModel.getSpecificTask(position)
+//                viewDailyTasksModel.removeTask(position)
+//                tasksNumberUpdate(viewDailyTasksModel.getTasks().size)
 //                adapter.notifyItemRemoved(position)
 //                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG)
 //                    .setAction("Undo") { _ ->
-//                        viewModel.addTaskToSpecificPosition(position, deletedTask)
+//                        viewDailyTasksModel.addTaskToSpecificPosition(position, deletedTask)
 //                        adapter.notifyItemInserted(position)
 //
 //                    }
@@ -113,8 +114,6 @@ class DailyTasksFragment : Fragment(){
         //Floating action button listener!
         _binding!!.fab.setOnClickListener { view ->
             addTaskDialog()
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
         }
 
         return root
@@ -125,14 +124,11 @@ class DailyTasksFragment : Fragment(){
         _binding = null
     }
 
-//    override fun onTaskClick(position: Int) {
-////        Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
-////        val clickedItem : Task = allTasks[position]
-//        editTaskDialog(position)
-//    }
+    override fun onTaskClick(position: Int) {
+        editTaskDialog(position)
+    }
+
     private fun addTaskDialog(){
-//        val editTaskDialog = EditTaskDialog()
-//        activity?.supportFragmentManager?.let { editTaskDialog.show(it, "example dialog") }
         val builder = AlertDialog.Builder(context)
         builder.setTitle("New Task")
         val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
@@ -146,7 +142,7 @@ class DailyTasksFragment : Fragment(){
             if(editText.text.toString().trim().isEmpty()){
                 Snackbar.make(view, "You forgot to type your task!", Snackbar.LENGTH_SHORT).show()
             }else{
-                var newTask = DailyTask(0,editText.text.toString(),Calendar.getInstance().time,"Active",1,auth.currentUser.uid)
+                var newTask = DailyTask(0,editText.text.toString(),Calendar.getInstance().time,"ACTIVE",1,auth.currentUser.uid)
                 viewDailyTasksModel.addDailyTask(newTask)
                 ad.dismiss()
             }
@@ -160,38 +156,40 @@ class DailyTasksFragment : Fragment(){
 //        }
 //        builder.setNegativeButton("CANCEL") { _, _ ->
 //        }
-//        builder.show()
+//        builder.show() this doesn't work maybe
     }
-//    private fun editTaskDialog(position: Int){
-//        val builder = AlertDialog.Builder(context)
-//        builder.setTitle("Edit Task")
-//        val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
-//        val editText = view.findViewById<EditText>(R.id.edit_text)
-//        val done = view.findViewById<Button>(R.id.done)
-//        val cancel = view.findViewById<Button>(R.id.cancel)
-//        editText.setText(viewDailyTasksModel.getSpecificTask(position).text)
-//        builder.setView(view)
-//        val ad : AlertDialog = builder.show()
-//        done.setOnClickListener {
-//            if(editText.text.toString().trim().isEmpty()){
-//                Snackbar.make(view, "You forgot to type your task!", Snackbar.LENGTH_SHORT).show()
-//            }else{
-//                viewModel.setTaskText(position, editText.text.toString())
-//                adapter.notifyDataSetChanged()
-//                ad.dismiss()
-//            }
-//        }
+
+    private fun editTaskDialog(position: Int){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Edit Task")
+        val view = layoutInflater.inflate(R.layout.edit_task_dialog, null)
+        val editText = view.findViewById<EditText>(R.id.edit_text)
+        val done = view.findViewById<Button>(R.id.done)
+        val cancel = view.findViewById<Button>(R.id.cancel)
+        editText.setText(viewDailyTasksModel.getSpecificTask(position).description)
+        builder.setView(view)
+        val ad : AlertDialog = builder.show()
+        done.setOnClickListener {
+            if(editText.text.toString().trim().isEmpty()){
+                Snackbar.make(view, "You forgot to type your task!", Snackbar.LENGTH_SHORT).show()
+            }else{
+//                viewDailyTasksModel.setTaskText(position, editText.text.toString(), auth.currentUser.uid)
+                viewDailyTasksModel.removeTask(position)
+                adapter.notifyDataSetChanged()
+                ad.dismiss()
+            }
+        }
+        cancel.setOnClickListener{
+            ad.dismiss()
+        }
 //        builder.setPositiveButton("DONE") { _, _ ->
-//            viewModel.setTaskText(position, editText.text.toString())
+//            viewDailyTasksModel.setTaskText(position, editText.text.toString())
 //            adapter.notifyDataSetChanged()
 //        }
 //        builder.setNegativeButton("CANCEL") { _, _ ->
 //        }
-//        cancel.setOnClickListener{
-//            ad.dismiss()
-//        }
-//        builder.show()
-//    }
+//        builder.show() this is a foking cunt
+    }
 
     fun tasksNumberUpdate(numOfTasks : Int){
         if(numOfTasks == 0){
@@ -201,5 +199,6 @@ class DailyTasksFragment : Fragment(){
         }
 
     }
+
 }
 

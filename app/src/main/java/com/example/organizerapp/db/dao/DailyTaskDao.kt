@@ -9,8 +9,8 @@ interface DailyTaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addDailyTask(dailyTask: DailyTask)
 
-    @Query("SELECT * FROM daily_task")
-    fun readAllData(): LiveData<List<DailyTask>>
+    @Update
+    suspend fun updateDailyTask(dailyTask: DailyTask)
 
     @Query("SELECT * FROM daily_task WHERE user_id IN (:userId)")
     fun getDailyTasksByUserId(userId: String): LiveData<List<DailyTask>>
