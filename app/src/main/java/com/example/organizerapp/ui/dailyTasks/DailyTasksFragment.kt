@@ -14,8 +14,8 @@ import com.example.organizerapp.databinding.FragmentDailyTasksBinding
 import com.example.organizerapp.db.entities.DailyTask
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_daily_tasks.view.*
 import java.util.*
+import kotlin.properties.Delegates
 
 class DailyTasksFragment : Fragment(){
 
@@ -24,6 +24,7 @@ class DailyTasksFragment : Fragment(){
     private lateinit var adapter: DailyTasksAdapter
     private lateinit var emptyFragmentMessage : TextView
     private lateinit var auth: FirebaseAuth
+    private var tasksDoneNum by Delegates.notNull<Int>()
 
     //val firebaseDatabase = FirebaseDataBase.getInstance()
 
@@ -59,12 +60,102 @@ class DailyTasksFragment : Fragment(){
         emptyFragmentMessage = binding.noTasksText
         tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
 
-        val info = binding.info
+//        val info = binding.info
+//
+//        //set clicklistener for info
+//        info.setOnClickListener{
+//             Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
+//
+//        }
 
-        //set clicklistener for info
-        info.setOnClickListener{
-             Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
+        var tomato_precentage = binding.tomatoPercentage
 
+        val tomato0 = binding.tomato0
+        val tomato1 = binding.tomato1
+        val tomato2 = binding.tomato2
+        val tomato3 = binding.tomato3
+        val tomato4 = binding.tomato4
+
+        tasksDoneNum = 7
+
+        var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
+        var pos : Int = -1
+        while (tasksDoneNum > 0){
+            pos++
+            if (pos < tomatoes.size){
+                tomatoes[pos]++
+                tasksDoneNum--
+            }
+            else if (pos >= tomatoes.size){
+                tomatoes[0]++
+                tomatoes[1] = 0
+                tomatoes[2] = 0
+                tomatoes[3] = 0
+                tomatoes[4] = 0
+                tasksDoneNum--
+                pos = 0
+            }
+
+        }
+
+        when {
+            tomatoes[0] == 1 -> {
+                tomato0.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[0] == 2 -> {
+                tomato0.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[0] == 3 -> {
+                tomato0.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[1] == 1 -> {
+                tomato1.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[1] == 2 -> {
+                tomato1.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[1] == 3 -> {
+                tomato1.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[2] == 1 -> {
+                tomato2.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[2] == 2 -> {
+                tomato2.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[2] == 3 -> {
+                tomato2.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[3] == 1 -> {
+                tomato3.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[3] == 2 -> {
+                tomato3.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[3] == 3 -> {
+                tomato3.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[4] == 1 -> {
+                tomato4.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[4] == 2 -> {
+                tomato4.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[4] == 3 -> {
+                tomato4.setImageResource(R.drawable.tomato_box_icon)
+            }
         }
 
 //        val swipeDelete = object : SwipeToDelete() {
