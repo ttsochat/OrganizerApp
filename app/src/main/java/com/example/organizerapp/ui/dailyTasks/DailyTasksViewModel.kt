@@ -1,10 +1,7 @@
 package com.example.organizerapp.ui.dailyTasks
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.organizerapp.db.AppDatabase
 import com.example.organizerapp.db.dao.DailyTaskDao
 import com.example.organizerapp.db.entities.DailyTask
