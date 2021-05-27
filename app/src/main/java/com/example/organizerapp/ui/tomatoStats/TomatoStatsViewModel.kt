@@ -25,4 +25,8 @@ class TomatoStatsViewModel(application: Application) : AndroidViewModel(applicat
     fun getDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
         return repository.getDailyTaskGroupedByDate(userId)
     }
+
+    fun getUncompletedDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
+        return repository.getUncompletedDailyTaskGroupedByDate(userId)
+    }
 }
