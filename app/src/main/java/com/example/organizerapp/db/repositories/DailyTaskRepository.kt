@@ -30,6 +30,11 @@ class DailyTaskRepository(private val dailyTaskDao: DailyTaskDao) {
         return dailyTaskDao.getDailyTaskById(dailyTaskId)
     }
 
+    fun getDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getCompletedDailyTasks(userId)
+    }
 
-
+    fun getUncompletedDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getAllDailyTasksStats(userId)
+    }
 }
