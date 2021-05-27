@@ -24,6 +24,6 @@ interface DailyTaskDao {
     @Query("SELECT * FROM daily_task WHERE dtid = (:dailyTaskId)")
     fun getDailyTaskById(dailyTaskId: Int): DailyTask
 
-    @Query("SELECT COUNT(*) as 'dtid', CAST(strftime('%Y-%m-%d', date / 1000, 'unixepoch') AS INTEGER) as date FROM daily_task WHERE status = 'DONE' AND user_id IN (:userId) group by strftime('%Y-%m-%d', date / 1000, 'unixepoch') ")
+    @Query("SELECT COUNT(*) as 'dtid', strftime('%d/%m/%Y', date / 1000, 'unixepoch') as 'description' FROM daily_task WHERE status = 'DONE' AND user_id IN (:userId) group by strftime('%d/%m/%Y', date / 1000, 'unixepoch') ")
     fun getCompletedDailyTasks(userId: String): LiveData<List<DailyTask>>
 }

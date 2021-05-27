@@ -43,18 +43,12 @@ class TomatoStatsFragment : Fragment() {
         })
         auth = FirebaseAuth.getInstance()
         tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
-            Log.d("GAY CUNT", "List size: " + dailyStats.size)
+            var stats = ""
             for(dailyStat in dailyStats) {
-                Log.d("GAY CUNT", dailyStat.toString())
-                Log.d("GAY CUNT", dailyStat.date.toString())
+                stats += "Tasks: " + dailyStat.dtid + " Period: "+ dailyStat.description + '\n'
             }
-
-//            var entries = HashMap<Date, Int>()
-//            for(dailyStat in dailyStats) {
-//                dailyStat.date.after()
-//            }
+            textView.text = stats
         })
-
         return root
     }
 
