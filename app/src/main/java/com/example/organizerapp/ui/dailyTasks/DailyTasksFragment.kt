@@ -2,12 +2,14 @@ package com.example.organizerapp.ui.dailyTasks
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentDailyTasksBinding
@@ -52,10 +54,17 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
         viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
-            viewDailyTasksModel.setDailyTasksList(dailyTasks)
-            adapter.setData(dailyTasks)
-            tasksNumberUpdate(viewDailyTasksModel.getNumberOfDailyTasksByUserId(auth.currentUser.uid))
+            var list = mutableListOf<DailyTask>()
+            for(dailyTask in dailyTasks){
+                if(dailyTask.status.toString().equals("ACTIVE")){
+                    list.add(dailyTask)
+                }
+            }
+            viewDailyTasksModel.setDailyTasksList(list)
+            adapter.setData(list)
+            tasksNumberUpdate(list.size)
         })
+
 
         recyclerView.adapter = adapter
 
@@ -66,51 +75,53 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
         //set clicklistener for info
         info.setOnClickListener{
-             Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
-
+             Toast.makeText(context, "Swipe finished tasks right & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
         }
 
-//        val swipeDelete = object : SwipeToDelete() {
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val position : Int = viewHolder.bindingAdapterPosition
+        val swipeDelete = object : SwipeToDone() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position : Int = viewHolder.adapterPosition
 //                val deletedTask : DailyTask = viewDailyTasksModel.getSpecificTask(position)
-//                viewDailyTasksModel.removeTask(position)
+                viewDailyTasksModel.taskDone(position, auth.currentUser.uid)
+                adapter.removeTaskFromAdapterList(position)
 //                tasksNumberUpdate(viewDailyTasksModel.getTasks().size)
-//                adapter.notifyItemRemoved(position)
-//                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG)
+                adapter.notifyItemRemoved(position)
+                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG)
 //                    .setAction("Undo") { _ ->
 //                        viewDailyTasksModel.addTaskToSpecificPosition(position, deletedTask)
+//                        viewDailyTasksModel.removeTask(position)
 //                        adapter.notifyItemInserted(position)
-//
 //                    }
-//                    .show()
-//            }
-//        }
+                    .show()
+            }
+        }
+
+        val touchHelper = ItemTouchHelper(swipeDelete)
+        touchHelper.attachToRecyclerView(recyclerView)
 //
-//        val touchHelper = ItemTouchHelper(swipeDelete)
-//        touchHelper.attachToRecyclerView(recyclerView)
-//
-//        val swipeArchive = object : SwipeToArchive(){
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val position : Int = viewHolder.bindingAdapterPosition
-//                val archivedTask : Task = viewModel.getSpecificTask(position)
-//                viewModel.archiveItem(viewHolder.bindingAdapterPosition)
-//                adapter.notifyDataSetChanged()
-//                Snackbar.make(recyclerView, "It's okay, you can do it tomorrow", Snackbar.LENGTH_LONG)
+        val swipeArchive = object : SwipeToArchive(){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position : Int = viewHolder.adapterPosition
+//                val archivedTask : DailyTask = viewDailyTasksModel.getSpecificTask(position)
+                viewDailyTasksModel.deleteTask(position, auth.currentUser.uid)
+                adapter.removeTaskFromAdapterList(position)
+                adapter.notifyItemRemoved(position)
+                Snackbar.make(recyclerView, "This task has been removed!", Snackbar.LENGTH_LONG)
 //                    .setAction("Undo") { _ ->
 //                        viewModel.addTaskToSpecificPosition(position, archivedTask)
 //                        adapter.notifyItemInserted(position)
 //
 //                    }
-//                    .show()
-//            }
-//        }
-//        val touchHelper2 = ItemTouchHelper(swipeArchive)
-//        touchHelper2.attachToRecyclerView(recyclerView)
+                    .show()
+            }
+        }
+        val touchHelper2 = ItemTouchHelper(swipeArchive)
+        touchHelper2.attachToRecyclerView(recyclerView)
 
 //        viewModel.text.observe(viewLifecycleOwner, {
 //            textView.text = it
 //        })
+
         //Floating action button listener!
         _binding!!.fab.setOnClickListener { view ->
             addTaskDialog()
@@ -173,8 +184,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
             if(editText.text.toString().trim().isEmpty()){
                 Snackbar.make(view, "You forgot to type your task!", Snackbar.LENGTH_SHORT).show()
             }else{
-//                viewDailyTasksModel.setTaskText(position, editText.text.toString(), auth.currentUser.uid)
-                viewDailyTasksModel.removeTask(position)
+                viewDailyTasksModel.setTaskText(position, editText.text.toString(), auth.currentUser.uid)
                 adapter.notifyDataSetChanged()
                 ad.dismiss()
             }

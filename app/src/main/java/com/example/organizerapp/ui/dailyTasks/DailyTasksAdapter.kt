@@ -28,9 +28,25 @@ class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerVie
     }
 
     fun setData(dailyTasks: List<DailyTask>){
+//        var list = mutableListOf<DailyTask>()
+//        for(dailyTask in dailyTasks){
+//            if(dailyTask.status.toString().equals("ACTIVE")){
+//                list.add(dailyTask)
+//            }
+//        }
         this.dailyTaskList = dailyTasks
+//        for(dailyTask in dailyTasks){
+//            Log.d("TAG",dailyTask.description.toString())
+//        }
         notifyDataSetChanged()
     }
+
+    fun removeTaskFromAdapterList(position: Int){
+        var list = dailyTaskList.toMutableList()
+        list.removeAt(position)
+        dailyTaskList = list.toList()
+    }
+
 
     override fun getItemCount(): Int {
         return dailyTaskList.size

@@ -14,6 +14,10 @@ class DailyTaskRepository(private val dailyTaskDao: DailyTaskDao) {
         dailyTaskDao.updateDailyTask(dailyTask)
     }
 
+    suspend fun deleteDailyTask(dailyTask: DailyTask){
+        dailyTaskDao.deleteDailyTask(dailyTask)
+    }
+
     fun getDailyTasksByUserId(userId : String): LiveData<List<DailyTask>> {
         return dailyTaskDao.getDailyTasksByUserId(userId)
     }

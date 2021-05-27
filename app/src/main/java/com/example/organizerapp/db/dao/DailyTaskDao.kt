@@ -12,6 +12,9 @@ interface DailyTaskDao {
     @Update
     suspend fun updateDailyTask(dailyTask: DailyTask)
 
+    @Delete
+    suspend fun deleteDailyTask(dailyTask: DailyTask)
+
     @Query("SELECT * FROM daily_task WHERE user_id IN (:userId)")
     fun getDailyTasksByUserId(userId: String): LiveData<List<DailyTask>>
 
