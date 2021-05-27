@@ -45,9 +45,14 @@ class TomatoStatsFragment : Fragment() {
         tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
             var stats = ""
             for(dailyStat in dailyStats) {
-                stats += "Tasks: " + dailyStat.dtid + " Period: "+ dailyStat.description + '\n'
+                var rate = 5
+                when {
+                    dailyStat.dtid > 5 -> rate = 9
+                    //TODO: Add/Change the rates
+                }
+                stats += dailyStat.description + "     Completed Tasks: " + dailyStat.dtid + '/' + rate + '\n'
+                textView.text = stats
             }
-            textView.text = stats
         })
         return root
     }
