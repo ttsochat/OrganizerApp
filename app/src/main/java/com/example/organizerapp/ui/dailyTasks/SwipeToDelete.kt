@@ -13,7 +13,8 @@ abstract class SwipeToDelete :ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
     }
 
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-//        var builder : RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+    //        var builder : RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 //        .addBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.my_background))
 //                .addActionIcon(R.drawable.my_icon)
 //                .create()

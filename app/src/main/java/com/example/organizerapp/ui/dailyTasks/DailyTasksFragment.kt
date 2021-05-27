@@ -68,6 +68,7 @@ class DailyTasksFragment : Fragment(){
 //
 //        }
 
+
         var tomato_precentage = binding.tomatoPercentage
 
         val tomato0 = binding.tomato0
@@ -76,26 +77,13 @@ class DailyTasksFragment : Fragment(){
         val tomato3 = binding.tomato3
         val tomato4 = binding.tomato4
 
-        tasksDoneNum = 7
+        tasksDoneNum = 15 //afto einai to noumero apo ta shmerina teleiwmena task
 
         var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
-        var pos : Int = -1
-        while (tasksDoneNum > 0){
-            pos++
-            if (pos < tomatoes.size){
-                tomatoes[pos]++
-                tasksDoneNum--
-            }
-            else if (pos >= tomatoes.size){
-                tomatoes[0]++
-                tomatoes[1] = 0
-                tomatoes[2] = 0
-                tomatoes[3] = 0
-                tomatoes[4] = 0
-                tasksDoneNum--
-                pos = 0
-            }
-
+        var i : Int = 0
+        while (i<tasksDoneNum){
+            next(tomatoes)
+            i++
         }
 
         when {
@@ -290,5 +278,19 @@ class DailyTasksFragment : Fragment(){
         }
 
     }
+
+    fun next(array : IntArray) {
+        var head : Int = 0;
+        var i : Int = 0
+        while (i < array.size){
+            if (array[head] > array[i]){
+                head = i;
+            }
+            i++
+        }
+        Arrays.fill(array, head + 1, array.size, 0)
+        array[head]++
+    }
+
 }
 
