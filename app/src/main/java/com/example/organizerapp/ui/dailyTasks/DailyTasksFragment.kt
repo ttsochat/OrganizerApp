@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_daily_tasks.view.*
 import java.util.*
+import kotlin.properties.Delegates
 
 class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
@@ -25,6 +26,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
     private lateinit var adapter: DailyTasksAdapter
     private lateinit var emptyFragmentMessage : TextView
     private lateinit var auth: FirebaseAuth
+    private var tasksDoneNum by Delegates.notNull<Int>()
 
     //val firebaseDatabase = FirebaseDataBase.getInstance()
 

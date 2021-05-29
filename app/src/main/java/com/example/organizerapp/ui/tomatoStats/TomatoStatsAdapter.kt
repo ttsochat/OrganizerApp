@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
@@ -27,10 +28,18 @@ class TomatoStatsAdapter(private var listener: OnTaskClickListener) : RecyclerVi
         var statC = tomatoStatsCompList.getOrNull(position)
         holder.dateOfStat?.text = statUnc.description
         holder.tomatoTotal?.text = statUnc.dtid.toString()
+
         if (statC != null) {
             holder.tomatoRate?.text = statC.dtid.toString()
+            when {
+                statC.dtid <= 5 -> holder.tomatoImage?.setImageResource(R.drawable.tomato_icon)
+                statC.dtid <= 10 -> holder.tomatoImage?.setImageResource(R.drawable.tomato_stack_icon)
+                statC.dtid > 10 -> holder.tomatoImage?.setImageResource(R.drawable.tomato_box_icon)
+            }
+
         } else {
             holder.tomatoRate?.text = 0.toString()
+            holder.tomatoImage?.setImageResource(R.drawable.tomato_icon)
         }
     }
 
@@ -61,6 +70,7 @@ class TomatoStatsAdapter(private var listener: OnTaskClickListener) : RecyclerVi
         var dateOfStat: TextView? = itemView.findViewById<TextView>(R.id.date_of_stat)
         val tomatoRate: TextView? = itemView.findViewById<TextView>(R.id.tomato_val)
         val tomatoTotal: TextView? = itemView.findViewById<TextView>(R.id.tomato_total)
+        val tomatoImage: ImageView? = itemView.findViewById<ImageView>(R.id.tomato_icon)
 
         init {
             tomatoRate?.setOnClickListener(this)
