@@ -19,6 +19,7 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
     private val repository: DailyTaskRepository
     private var dailyTaskList = emptyList<DailyTask>()
 
+
     init{
         val dailyTaskDao = AppDatabase.getInstance(application).dailyTaskDao()
         repository = DailyTaskRepository(dailyTaskDao)
