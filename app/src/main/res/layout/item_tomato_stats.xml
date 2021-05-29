@@ -34,13 +34,30 @@
                 app:srcCompat="@drawable/ic_menu_gallery"
                 android:clickable="true"/>
             <TextView
-                android:id="@+id/tomato_percentage"
+                android:id="@+id/tomato_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0/0"
+                android:text="0"
                 android:textSize="15dp"
                 android:layout_gravity="center_vertical|end"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="27dp"/>
+            <TextView
+                android:id="@+id/tomato_percentage_slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="15dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="19dp"/>
+
+            <TextView
+                android:id="@+id/tomato_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="9dp"
+                android:text="0"
+                android:textSize="15dp" />
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
