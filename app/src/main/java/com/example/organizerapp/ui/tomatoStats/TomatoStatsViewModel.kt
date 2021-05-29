@@ -13,7 +13,7 @@ class TomatoStatsViewModel(application: Application) : AndroidViewModel(applicat
 
     private val repository: DailyTaskRepository
     private val _text = MutableLiveData<String>().apply {
-        value = "This is tomato stats Fragment!"
+        value = "Here you can view your daily tomato stats"
     }
     val text: LiveData<String> = _text
 

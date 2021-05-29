@@ -9,15 +9,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.databinding.FragmentTomatoStatsBinding
 import com.example.organizerapp.db.entities.DailyTask
 import com.google.firebase.auth.FirebaseAuth
 
-class TomatoStatsFragment : Fragment() {
+class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
 
     private lateinit var tomatoStatsViewModel: TomatoStatsViewModel
     private var _binding: FragmentTomatoStatsBinding? = null
     private lateinit var auth: FirebaseAuth
+    private lateinit var tomatoStatsAdapter: TomatoStatsAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,27 +42,31 @@ class TomatoStatsFragment : Fragment() {
         })
         auth = FirebaseAuth.getInstance()
 
+        var recyclerView: RecyclerView = binding.tomatoStatsRecycler
+        tomatoStatsAdapter = TomatoStatsAdapter(this)
+        recyclerView.adapter = tomatoStatsAdapter
+
         tomatoStatsViewModel.getUncompletedDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
-            var text = ""
-            for(dailyTask in dailyStats){
-                text += "Date: " + dailyTask.description + " Tasks: 0/" + dailyTask.dtid + '\n'
-            }
-            textView.text = text
+            tomatoStatsAdapter.setUncData(dailyStats)
+            if(dailyStats.size.compareTo(0)>0)
+                textView.text = ""
+
+            tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
+                tomatoStatsAdapter.setComData(dailyStats)
+            })
         })
 
-        tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
-            var text = textView.text.subSequence(0, 22).toString()
-            var theRest = textView.text.subSequence(0, 24).toString()
-            for(dailyTask in dailyStats){
-                //TODO: To change the way the stats get displayed
-            }
-        })
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onTaskClick(position: Int) {
+        TODO("Not yet implemented")
     }
 
 
