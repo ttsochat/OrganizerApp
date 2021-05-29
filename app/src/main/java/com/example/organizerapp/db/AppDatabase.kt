@@ -6,15 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.organizerapp.db.dao.DailyTaskDao
+import com.example.organizerapp.db.dao.MyListsDao
 import com.example.organizerapp.db.dao.UserDao
 import com.example.organizerapp.db.entities.DailyTask
+import com.example.organizerapp.db.entities.MyList
 import com.example.organizerapp.db.entities.User
 
-@Database(entities = arrayOf(User::class, DailyTask::class), version = 1, exportSchema = false)
+
+@Database(entities = arrayOf(User::class, DailyTask::class, MyList::class), version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun dailyTaskDao() : DailyTaskDao
+    abstract fun myListsDao(): MyListsDao
 
     companion object {
 

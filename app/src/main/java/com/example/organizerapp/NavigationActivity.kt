@@ -2,7 +2,6 @@ package com.example.organizerapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -48,7 +47,7 @@ class NavigationActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_daily_tasks, R.id.nav_my_list, R.id.nav_calendar, R.id.nav_tomato_stats
+                R.id.nav_daily_tasks, R.id.nav_my_list, R.id.nav_tomato_stats
             ), drawerLayout
         )
         //to automatically update toolbars header
@@ -73,9 +72,6 @@ class NavigationActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                true
-            }
             R.id.action_logout -> {
                 logout()
                 true

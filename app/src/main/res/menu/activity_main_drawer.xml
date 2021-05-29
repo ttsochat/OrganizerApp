@@ -15,10 +15,6 @@
             android:icon="@drawable/ic_baseline_format_list_bulleted_24"
             android:title="@string/my_list" />
         <item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/baseline_calendar_today_24"
-            android:title="@string/calendar" />
-        <item
             android:id="@+id/nav_tomato_stats"
             android:icon="@drawable/baseline_show_chart_24"
             android:title="@string/tomato_stats" />

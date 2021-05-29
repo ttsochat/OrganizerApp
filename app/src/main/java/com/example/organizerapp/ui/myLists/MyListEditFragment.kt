@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.ListDetailsBinding
+import com.example.organizerapp.db.entities.MyList
 import com.google.android.material.snackbar.Snackbar
 
 class MyListEditFragment: Fragment() {
@@ -17,6 +18,7 @@ class MyListEditFragment: Fragment() {
     private lateinit var binding: ListDetailsBinding
     private var listId : Int = -1
     private val defaultId : Int = -1
+    private lateinit var userId : String
     private lateinit var currentTitle: String
     private lateinit var currentList: String
 
@@ -26,7 +28,10 @@ class MyListEditFragment: Fragment() {
         arguments?.getInt("listId")?.let { lId ->
             this.listId = lId
         }
-
+        arguments?.getString("userId")?.let{
+            println("inside arguments!!")
+            this.userId = it
+        }
 
     }
 
@@ -35,7 +40,7 @@ class MyListEditFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         myListEditViewModel =
             ViewModelProvider(this).get(MyListsViewModel::class.java)
@@ -45,7 +50,7 @@ class MyListEditFragment: Fragment() {
 
         if(listId != defaultId){
             binding.editTextTitle.setText(myListEditViewModel.getCurrentListFromId(listId).title)
-            binding.editTextList.setText(myListEditViewModel.getCurrentListFromId(listId).list)
+            binding.editTextList.setText(myListEditViewModel.getCurrentListFromId(listId).listDetails)
         }
 
         binding.listDoneImageButton.setOnClickListener {
@@ -57,6 +62,7 @@ class MyListEditFragment: Fragment() {
 
             }else{
                 if(listId == defaultId){
+                    println("inside add new list!")
                     addNewList(currentTitle, currentList)
                 }else{
                     updateList(currentTitle, currentList, listId)
@@ -74,12 +80,12 @@ class MyListEditFragment: Fragment() {
 
 
     private fun updateList(title: String, list: String, id: Int) {
-        myListEditViewModel.updateList(title,list,id)
+        myListEditViewModel.updateList(title,list,id,userId)
     }
 
 
     fun addNewList(title: String, list: String){
-        myListEditViewModel.addItemToList(Lists(title, list, 0))
+        myListEditViewModel.addItemToList(MyList(0,title, list, userId))
     }
 }
 

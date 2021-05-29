@@ -13,34 +13,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-904" />
-                            <option name="y" value="-506" />
+                            <option name="x" value="-1015" />
+                            <option name="y" value="-431" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_myListEditFragment_to_nav_my_list">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_calendar">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-1344" />
-                            <option name="y" value="-86" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_nav_calendar_to_nav_daily_tasks">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -61,11 +40,6 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_nav_daily_tasks_to_nav_calendar">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                             <entry key="action_nav_daily_tasks_to_nav_my_list">
                               <value>
                                 <LayoutPositions />
@@ -112,8 +86,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1312" />
-                            <option name="y" value="356" />
+                            <option name="x" value="-1343" />
+                            <option name="y" value="-20" />
                           </Point>
                         </option>
                         <option name="myPositions">
