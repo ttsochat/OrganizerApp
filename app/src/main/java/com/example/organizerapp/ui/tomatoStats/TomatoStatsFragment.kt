@@ -122,6 +122,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         }
 
         when {
+            tomatoes[0] == 0 -> {
+                tomato0.setImageResource(R.drawable.empty_icon)
+            }
             tomatoes[0] == 1 -> {
                 tomato0.setImageResource(R.drawable.tomato_icon)
             }
@@ -134,6 +137,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         }
 
         when {
+            tomatoes[1] == 0 -> {
+                tomato1.setImageResource(R.drawable.empty_icon)
+            }
             tomatoes[1] == 1 -> {
                 tomato1.setImageResource(R.drawable.tomato_icon)
             }
@@ -149,6 +155,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
 //        info.setOnClickListener{
 //             Toast.makeText(context, "Swipe finished tasks right & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
         when {
+            tomatoes[2] == 0 -> {
+                tomato2.setImageResource(R.drawable.empty_icon)
+            }
             tomatoes[2] == 1 -> {
                 tomato2.setImageResource(R.drawable.tomato_icon)
             }
@@ -161,6 +170,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         }
 
         when {
+            tomatoes[3] == 0 -> {
+                tomato3.setImageResource(R.drawable.empty_icon)
+            }
             tomatoes[3] == 1 -> {
                 tomato3.setImageResource(R.drawable.tomato_icon)
             }
@@ -173,6 +185,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         }
 
         when {
+            tomatoes[4] == 0 -> {
+                tomato4.setImageResource(R.drawable.empty_icon)
+            }
             tomatoes[4] == 1 -> {
                 tomato4.setImageResource(R.drawable.tomato_icon)
             }

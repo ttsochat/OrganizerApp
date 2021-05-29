@@ -47,6 +47,12 @@ class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerVie
         dailyTaskList = list.toList()
     }
 
+    fun addTaskToSpecificPosition(position: Int, task: DailyTask){
+        var list = dailyTaskList.toMutableList()
+        list.add(position, task)
+        dailyTaskList = list.toList()
+    }
+
 
     override fun getItemCount(): Int {
         return dailyTaskList.size
