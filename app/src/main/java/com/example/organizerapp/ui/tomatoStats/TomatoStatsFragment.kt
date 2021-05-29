@@ -10,16 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentTomatoStatsBinding
 import com.example.organizerapp.db.entities.DailyTask
+import com.example.organizerapp.ui.dailyTasks.DailyTasksViewModel
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
+import kotlin.properties.Delegates
 
 class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
 
+    private lateinit var viewDailyTasksModel: DailyTasksViewModel
     private lateinit var tomatoStatsViewModel: TomatoStatsViewModel
     private var _binding: FragmentTomatoStatsBinding? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var tomatoStatsAdapter: TomatoStatsAdapter
+    private var tasksDoneNum by Delegates.notNull<Int>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -46,6 +52,8 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         tomatoStatsAdapter = TomatoStatsAdapter(this)
         recyclerView.adapter = tomatoStatsAdapter
 
+        //
+        // This is  for statistics
         tomatoStatsViewModel.getUncompletedDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
             tomatoStatsAdapter.setUncData(dailyStats)
             if(dailyStats.size.compareTo(0)>0)
@@ -56,6 +64,29 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
             })
         })
 
+        //
+        // This is for the tomato bar
+        val today: Calendar = GregorianCalendar()
+        // reset hour, minutes, seconds and millis
+        // reset hour, minutes, seconds and millis
+        today[Calendar.HOUR_OF_DAY] = 0
+        today[Calendar.MINUTE] = 0
+        today[Calendar.SECOND] = 0
+        today[Calendar.MILLISECOND] = 0
+        viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
+        viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
+            tasksDoneNum=0
+            var dailyListSize=0
+            for(dailyTask in dailyTasks){
+                if(today.time.compareTo(dailyTask.date)<0){
+                    dailyListSize++
+                }
+                if(dailyTask.status.toString().equals("DONE") && today.time.compareTo(dailyTask.date)<0){
+                    tasksDoneNum++
+                }
+            }
+            tomatoBar(dailyListSize)
+        })
 
         return root
     }
@@ -66,7 +97,105 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
     }
 
     override fun onTaskClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("","clicked")
+    }
+
+    fun tomatoBar(allDailyTasks: Int){
+        var tomato_precentage = binding.tomatoPercentage
+        tomato_precentage.setText("$tasksDoneNum / $allDailyTasks")
+
+        val tomato0 = binding.tomato0
+        val tomato1 = binding.tomato1
+        val tomato2 = binding.tomato2
+        val tomato3 = binding.tomato3
+        val tomato4 = binding.tomato4
+
+//        tasksDoneNum = 0 //afto einai to noumero apo ta shmerina teleiwmena task
+//        tasksDoneNum++
+//        Log.d("TAG",tasksDoneNum.toString())
+
+        var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
+        var i : Int = 0
+        while (i<tasksDoneNum){
+            next(tomatoes)
+            i++
+        }
+
+        when {
+            tomatoes[0] == 1 -> {
+                tomato0.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[0] == 2 -> {
+                tomato0.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[0] == 3 -> {
+                tomato0.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[1] == 1 -> {
+                tomato1.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[1] == 2 -> {
+                tomato1.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[1] == 3 -> {
+                tomato1.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        //set clicklistener for info
+//        info.setOnClickListener{
+//             Toast.makeText(context, "Swipe finished tasks right & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
+        when {
+            tomatoes[2] == 1 -> {
+                tomato2.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[2] == 2 -> {
+                tomato2.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[2] == 3 -> {
+                tomato2.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[3] == 1 -> {
+                tomato3.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[3] == 2 -> {
+                tomato3.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[3] == 3 -> {
+                tomato3.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+
+        when {
+            tomatoes[4] == 1 -> {
+                tomato4.setImageResource(R.drawable.tomato_icon)
+            }
+            tomatoes[4] == 2 -> {
+                tomato4.setImageResource(R.drawable.tomato_stack_icon)
+            }
+            tomatoes[4] == 3 -> {
+                tomato4.setImageResource(R.drawable.tomato_box_icon)
+            }
+        }
+    }
+
+    fun next(array : IntArray) {
+        var head : Int = 0;
+        var i : Int = 0
+        while (i < array.size){
+            if (array[head] > array[i]){
+                head = i;
+            }
+            i++
+        }
+        Arrays.fill(array, head + 1, array.size, 0)
+        array[head]++
     }
 
 

@@ -95,10 +95,6 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         emptyFragmentMessage = binding.noTasksText
         tasksNumberUpdate(dailyActiveListSize)
 
-        viewDailyTasksModel.getDailyTasksByUserIdDaily(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
-            Log.d("TAG", dailyTasks.size.toString())
-        })
-
 
 //        val info = binding.info
 //

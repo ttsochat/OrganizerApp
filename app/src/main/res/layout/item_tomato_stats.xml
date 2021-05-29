@@ -40,7 +40,7 @@
                 android:text="0"
                 android:textSize="15dp"
                 android:layout_gravity="center_vertical|end"
-                android:layout_marginRight="38dp"/>
+                android:layout_marginRight="50dp"/>
             <TextView
                 android:id="@+id/tomato_percentage_slash"
                 android:layout_width="wrap_content"
@@ -48,14 +48,14 @@
                 android:text="/"
                 android:textSize="15dp"
                 android:layout_gravity="center_vertical|end"
-                android:layout_marginRight="23dp"/>
+                android:layout_marginRight="35dp"/>
 
             <TextView
                 android:id="@+id/tomato_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="15dp"
                 android:text="0"
                 android:textSize="15dp" />
         </FrameLayout>
