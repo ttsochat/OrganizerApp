@@ -13,7 +13,7 @@ import java.util.*
             onDelete = CASCADE)])
 data class DailyTask(
     @PrimaryKey(autoGenerate = true) val dtid: Int,
-    @ColumnInfo(name = "description") val description: String?,
+    @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "date") val date: Date?,
     @ColumnInfo(name = "status") val status: String?,
     @ColumnInfo(name = "tomato_value") val tomatoValue: Int?,

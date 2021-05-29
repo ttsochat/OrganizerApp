@@ -12,6 +12,7 @@ import com.example.organizerapp.db.entities.DailyTask
 import com.example.organizerapp.db.entities.MyList
 import com.example.organizerapp.db.entities.User
 
+
 @Database(entities = arrayOf(User::class, DailyTask::class, MyList::class), version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

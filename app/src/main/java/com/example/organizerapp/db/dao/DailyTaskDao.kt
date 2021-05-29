@@ -9,11 +9,17 @@ interface DailyTaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addDailyTask(dailyTask: DailyTask)
 
-    @Query("SELECT * FROM daily_task")
-    fun readAllData(): LiveData<List<DailyTask>>
+    @Update
+    suspend fun updateDailyTask(dailyTask: DailyTask)
+
+    @Delete
+    suspend fun deleteDailyTask(dailyTask: DailyTask)
 
     @Query("SELECT * FROM daily_task WHERE user_id IN (:userId)")
     fun getDailyTasksByUserId(userId: String): LiveData<List<DailyTask>>
+
+    @Query("SELECT * FROM daily_task WHERE user_id IN (:userId) AND date = date('now')")
+    fun getDailyTasksByUserIdDaily(userId: String): LiveData<List<DailyTask>>
 
     @Query("SELECT Count(*) FROM daily_task WHERE user_id IN (:userId)")
     fun getNumberOfDailyTasksByUserId(userId: String): Int
@@ -21,4 +27,9 @@ interface DailyTaskDao {
     @Query("SELECT * FROM daily_task WHERE dtid = (:dailyTaskId)")
     fun getDailyTaskById(dailyTaskId: Int): DailyTask
 
+    @Query("SELECT COUNT(*) as 'dtid', strftime('%d/%m/%Y', date / 1000, 'unixepoch') as 'description' FROM daily_task WHERE status = 'DONE' AND user_id IN (:userId) group by strftime('%d/%m/%Y', date / 1000, 'unixepoch') ORDER BY date ASC")
+    fun getCompletedDailyTasks(userId: String): LiveData<List<DailyTask>>
+
+    @Query("SELECT COUNT(*) as 'dtid', strftime('%d/%m/%Y', date / 1000, 'unixepoch') as 'description' FROM daily_task WHERE user_id IN (:userId) group by strftime('%d/%m/%Y', date / 1000, 'unixepoch') ORDER BY date ASC")
+    fun getAllDailyTasksStats(userId: String): LiveData<List<DailyTask>>
 }

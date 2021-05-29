@@ -6,14 +6,24 @@ import com.example.organizerapp.db.entities.DailyTask
 
 class DailyTaskRepository(private val dailyTaskDao: DailyTaskDao) {
 
-    val readAllData : LiveData<List<DailyTask>> = dailyTaskDao.readAllData()
-
     suspend fun addDailyTask(dailyTask: DailyTask){
         dailyTaskDao.addDailyTask(dailyTask)
     }
 
+    suspend fun updateDailyTask(dailyTask: DailyTask){
+        dailyTaskDao.updateDailyTask(dailyTask)
+    }
+
+    suspend fun deleteDailyTask(dailyTask: DailyTask){
+        dailyTaskDao.deleteDailyTask(dailyTask)
+    }
+
     fun getDailyTasksByUserId(userId : String): LiveData<List<DailyTask>> {
         return dailyTaskDao.getDailyTasksByUserId(userId)
+    }
+
+    fun getDailyTasksByUserIdDaily(userId : String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getDailyTasksByUserIdDaily(userId)
     }
 
     fun getNumberOfDailyTasksByUserId(userId: String): Int {
@@ -24,6 +34,11 @@ class DailyTaskRepository(private val dailyTaskDao: DailyTaskDao) {
         return dailyTaskDao.getDailyTaskById(dailyTaskId)
     }
 
+    fun getDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getCompletedDailyTasks(userId)
+    }
 
-
+    fun getUncompletedDailyTaskGroupedByDate(userId: String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getAllDailyTasksStats(userId)
+    }
 }
