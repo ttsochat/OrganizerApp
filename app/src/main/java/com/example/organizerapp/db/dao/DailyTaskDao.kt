@@ -18,6 +18,9 @@ interface DailyTaskDao {
     @Query("SELECT * FROM daily_task WHERE user_id IN (:userId)")
     fun getDailyTasksByUserId(userId: String): LiveData<List<DailyTask>>
 
+    @Query("SELECT * FROM daily_task WHERE user_id IN (:userId) AND date = date('now')")
+    fun getDailyTasksByUserIdDaily(userId: String): LiveData<List<DailyTask>>
+
     @Query("SELECT Count(*) FROM daily_task WHERE user_id IN (:userId)")
     fun getNumberOfDailyTasksByUserId(userId: String): Int
 

@@ -39,6 +39,10 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
         return repository.getDailyTasksByUserId(userId)
     }
 
+    fun getDailyTasksByUserIdDaily(userId : String): LiveData<List<DailyTask>> {
+        return repository.getDailyTasksByUserIdDaily(userId)
+    }
+
     fun getNumberOfDailyTasksByUserId(userId: String): Int {
         return repository.getNumberOfDailyTasksByUserId(userId)
     }

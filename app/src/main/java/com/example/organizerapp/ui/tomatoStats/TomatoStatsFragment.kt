@@ -18,8 +18,6 @@ class TomatoStatsFragment : Fragment() {
     private lateinit var tomatoStatsViewModel: TomatoStatsViewModel
     private var _binding: FragmentTomatoStatsBinding? = null
     private lateinit var auth: FirebaseAuth
-    private var dailyTasksList: Int = 0
-    private var dailyTasksComList: Int = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -64,4 +62,6 @@ class TomatoStatsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

@@ -84,7 +84,7 @@
                 android:layout_marginTop="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="right"
-                android:text="0/0"/>
+                android:text="0 / 0"/>
 
         </FrameLayout>
         //mexri edw

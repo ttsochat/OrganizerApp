@@ -22,6 +22,10 @@ class DailyTaskRepository(private val dailyTaskDao: DailyTaskDao) {
         return dailyTaskDao.getDailyTasksByUserId(userId)
     }
 
+    fun getDailyTasksByUserIdDaily(userId : String): LiveData<List<DailyTask>> {
+        return dailyTaskDao.getDailyTasksByUserIdDaily(userId)
+    }
+
     fun getNumberOfDailyTasksByUserId(userId: String): Int {
         return dailyTaskDao.getNumberOfDailyTasksByUserId(userId)
     }
