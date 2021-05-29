@@ -1,76 +1,74 @@
 package com.example.organizerapp.ui.myLists
 
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.organizerapp.db.AppDatabase
+import com.example.organizerapp.db.entities.MyList
+import com.example.organizerapp.db.repositories.MyListsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
+class MyListsViewModel(application: Application) : AndroidViewModel(application) {
 
-class MyListsViewModel : ViewModel() {
-
-    private var lists = MutableLiveData<List<Lists>>()
-    var tsingkoslist : MutableList<Lists> = mutableListOf()
+    private val repository: MyListsRepository
+    private var myLists= emptyList<MyList>()
 
 
     init{
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",1))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",2))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",3))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",4))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",5))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",6))
-        tsingkoslist.add(Lists("kasfsfsfdsfdsfdsfdsfdsfdsfdsfdsfdsfd","kalamari",7))
-        lists.value = tsingkoslist
-
-    }
-
-    fun getLists(): MutableLiveData<List<Lists>> {
-       return lists
+        val myListsDao = AppDatabase.getInstance(application).myListsDao()
+        repository = MyListsRepository(myListsDao)
     }
 
 
-
-    fun getCurrentListFromId(id: Int): Lists {
-        for(list in tsingkoslist){
-            if(list.id == id){
-                return list
-            }
-        }
-        return Lists()
+    fun getMyListsByUserId(userId: String): LiveData<List<MyList>>{
+        return repository.getMyListsByUserId(userId)
     }
 
+
+    fun setMyLists(userLists: List<MyList>){
+        myLists = userLists
+    }
+
+
+
+    fun getCurrentListFromId(id: Int): MyList {
+        return repository.getMyListById(id)
+    }
 
 
     fun removeItemFromList(id: Int) {
-        var l = Lists()
-        for(list in tsingkoslist){
-            if(list.id == id){
-                l = list
+
+        for(list in myLists){
+            if(list.mlid == id){
+
+                val newList = myLists.toMutableList()
+                newList.remove(list)
+                viewModelScope.launch(Dispatchers.IO) {
+                    repository.deleteMyList(list)
+                }
+                break
             }
         }
-        tsingkoslist.remove(l)
-        lists.value = tsingkoslist
+
     }
 
-    fun addItemToList(newList: Lists){
-        tsingkoslist.add(newList)
-        lists.value = tsingkoslist
-        println("tsingos size="+tsingkoslist.size + " lists size=" + lists.value)
+    fun addItemToList(newList: MyList){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addMyList(newList)
+        }
     }
 
+    fun updateList(newTitle: String, newList: String, id: Int, userId: String){
 
-    fun updateList(newTitle: String, newList: String, id: Int){
-       for(list in tsingkoslist){
-           if(list.id == id){
-               println("inside if")
-               list.title = newTitle
-               list.list = newList
-           }
-       }
-        lists.value = tsingkoslist
+        val updateList = MyList(id,newTitle,newList,userId)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateMyList(updateList)
+        }
+
     }
-
-
 
 
 }

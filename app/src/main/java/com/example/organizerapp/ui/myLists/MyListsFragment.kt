@@ -10,18 +10,20 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentMyListsBinding
+import com.example.organizerapp.db.entities.MyList
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 class MyListsFragment : Fragment() {
 
     private lateinit var myListsViewModel: MyListsViewModel
     private var _binding: FragmentMyListsBinding? = null
     private val myAdapter = MyListsAdapter{ list -> onClick(list)}
+    private lateinit var auth: FirebaseAuth
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 
 
     override fun onCreateView(
@@ -30,6 +32,8 @@ class MyListsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        auth = FirebaseAuth.getInstance()
+
         myListsViewModel =
             ViewModelProvider(this).get(MyListsViewModel::class.java)
 
@@ -37,12 +41,14 @@ class MyListsFragment : Fragment() {
         val root: View = binding.root
 
         //view model observer and adapter submit list!!
-        myListsViewModel.getLists().observe(viewLifecycleOwner, Observer{
-
-            myAdapter.submitList(it)
-            myAdapter.notifyDataSetChanged()
+        myListsViewModel.getMyListsByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, Observer{
+            var myList = mutableListOf<MyList>()
+            for(list in it){
+                myList.add(list)
+            }
+            myListsViewModel.setMyLists(myList)
+            myAdapter.submitList(myList)
             showHideMessage(it)
-
         })
         val recyclerView: RecyclerView = _binding!!.recyclerView
         recyclerView.adapter = myAdapter
@@ -50,9 +56,9 @@ class MyListsFragment : Fragment() {
 
         //Floating action button listener!
         binding.fab.setOnClickListener {
-
             val bundle = Bundle()
             bundle.putInt("listId", -1)
+            bundle.putString("userId", auth.currentUser.uid)
             Navigation.findNavController(root).navigate(R.id.action_nav_my_list_to_myListEditFragment, bundle)
 
         }
@@ -79,17 +85,18 @@ class MyListsFragment : Fragment() {
     }
 
     //navigate to myListEditFragment
-    private fun onClick(list: Lists){
+    private fun onClick(list: MyList){
 
         val bundle = Bundle()
-        bundle.putInt("listId", list.id)
+        list.mlid?.let { bundle.putInt("listId", it) }
+        bundle.putString("userId", auth.currentUser.uid)
         view?.let { Navigation.findNavController(it)
             .navigate(R.id.action_nav_my_list_to_myListEditFragment, bundle)}
 
     }
 
 
-    private fun showHideMessage(list: List<Lists>){
+    private fun showHideMessage(list: List<MyList>){
 
         if( !list.isNullOrEmpty()){
             binding.messageEmptyList.visibility = View.INVISIBLE

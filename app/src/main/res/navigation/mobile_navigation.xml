@@ -15,9 +15,6 @@
             android:id="@+id/action_nav_daily_tasks_to_nav_my_list"
             app:destination="@id/nav_my_list" />
         <action
-            android:id="@+id/action_nav_daily_tasks_to_nav_calendar"
-            app:destination="@id/nav_calendar" />
-        <action
             android:id="@+id/action_nav_daily_tasks_to_nav_tomato_stats"
             app:destination="@id/nav_tomato_stats" />
     </fragment>
@@ -35,16 +32,6 @@
             app:destination="@id/myListEditFragment" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/nav_calendar"
-        android:name="com.example.organizerapp.ui.calendar.CalendarFragment"
-        android:label="@string/menu_calendar"
-        tools:layout="@layout/fragment_calendar" >
-        <action
-            android:id="@+id/action_nav_calendar_to_nav_daily_tasks"
-            app:destination="@id/nav_daily_tasks" />
-    </fragment>
 
     <fragment
         android:id="@+id/nav_tomato_stats"

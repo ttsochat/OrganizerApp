@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
+import com.example.organizerapp.db.entities.MyList
 
 
-class MyListsAdapter (private val onClick: (Lists) -> Unit):
-    ListAdapter<Lists, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack){
+class MyListsAdapter (private val onClick: (MyList) -> Unit):
+    ListAdapter<MyList, MyListsAdapter.ListsViewHolder>(ListsDiffCallBack){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListsViewHolder {
@@ -27,13 +28,13 @@ class MyListsAdapter (private val onClick: (Lists) -> Unit):
 
 
     //View Holder
-    class ListsViewHolder(cardView : View, val onClick: (Lists) -> Unit) : RecyclerView.ViewHolder(cardView) ,
+    class ListsViewHolder(cardView : View, val onClick: (MyList) -> Unit) : RecyclerView.ViewHolder(cardView) ,
         View.OnCreateContextMenuListener {
 
         private val  title: TextView = cardView.findViewById(R.id.card_list_title)
         private val lists: TextView = cardView.findViewById(R.id.card_list_text)
         val  layout: LinearLayout = cardView.findViewById(R.id.my_list_item_layout)
-        private var currentList: Lists? = null
+        private var currentList: MyList? = null
 
         //click listener for card view
         init {
@@ -45,10 +46,10 @@ class MyListsAdapter (private val onClick: (Lists) -> Unit):
             }
         }
 
-        fun connect(list : Lists){
+        fun connect(list : MyList){
             currentList = list
             title.text = list.title
-            lists.text = list.list
+            lists.text = list.listDetails
         }
 
 
@@ -58,7 +59,7 @@ class MyListsAdapter (private val onClick: (Lists) -> Unit):
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-             currentList?.id?.let {
+             currentList?.mlid?.let {
                  menu?.add(this.adapterPosition,
                      it, 111, "Delete List")
              }
@@ -70,13 +71,13 @@ class MyListsAdapter (private val onClick: (Lists) -> Unit):
 }
 
 
-object ListsDiffCallBack: DiffUtil.ItemCallback<Lists>(){
-    override fun areItemsTheSame(oldItem: Lists, newItem: Lists): Boolean {
+object ListsDiffCallBack: DiffUtil.ItemCallback<MyList>(){
+    override fun areItemsTheSame(oldItem: MyList, newItem: MyList): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Lists, newItem: Lists): Boolean {
-       return oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: MyList, newItem: MyList): Boolean {
+       return oldItem.mlid == newItem.mlid
     }
 
 }
