@@ -50,6 +50,8 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
 
         tomatoStatsViewModel.getUncompletedDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
             tomatoStatsAdapter.setUncData(dailyStats)
+            if(dailyStats.size.compareTo(0)>0)
+                textView.text = ""
 
             tomatoStatsViewModel.getDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
                 tomatoStatsAdapter.setComData(dailyStats)
