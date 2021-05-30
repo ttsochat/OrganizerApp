@@ -2,7 +2,9 @@ package com.example.organizerapp.db.entities
 
 import androidx.room.*
 
-
+/**
+    Data class MyList holds the data of a list object.
+ */
 @Entity(tableName = "my_list",
     indices = arrayOf(Index(value = ["user_id"])),
     foreignKeys = [
