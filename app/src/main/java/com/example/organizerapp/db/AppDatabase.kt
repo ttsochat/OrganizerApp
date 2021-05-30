@@ -12,7 +12,9 @@ import com.example.organizerapp.db.entities.DailyTask
 import com.example.organizerapp.db.entities.MyList
 import com.example.organizerapp.db.entities.User
 
-
+/**
+ * Annotates class to be a Room Database with the tables (entities) User, DailyTask, MyList.
+*/
 @Database(entities = arrayOf(User::class, DailyTask::class, MyList::class), version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

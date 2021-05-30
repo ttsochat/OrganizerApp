@@ -18,28 +18,31 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlin.concurrent.thread
 
+/**
+ * Login activity is activity that is used for signing in. The user is authenticated
+ * with Firebase.
+ */
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
+    /**
+     * Overwritten OnCreate method
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         auth = FirebaseAuth.getInstance()
-
         binding.register.setOnClickListener{
             startActivity(Intent(this,RegisterActivity::class.java))
             finish()
         }
-
-
         binding.login.setOnClickListener{
             doLogin()
         }
-
         binding.forgot.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Forgot password")
@@ -55,6 +58,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sends email to reset the user's password.
+     */
     private fun forgotPassword(fp_email: EditText?) {
         if(!fp_email?.text.toString().trim().matches(emailPattern.toRegex())){
             return
@@ -62,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
         if(fp_email?.text.toString().isEmpty()){
             return
         }
-
         auth.sendPasswordResetEmail(fp_email?.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -71,12 +76,18 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Shows a Toast message on the bottom of the screen.
+     */
     fun showToast(toast: String?) {
         runOnUiThread {
             Toast.makeText(this@LoginActivity, toast, Toast.LENGTH_SHORT).show()
         }
     }
 
+    /**
+     * Signs in the user to the app.
+     */
     private fun doLogin() {
         if(binding.email.text.toString().isEmpty()){
             showToast("Please enter Email")
@@ -100,6 +111,10 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * When the app launches if a user is already signed in it automatically redirects him
+     * to Navigation Activity else it shows him the Login Activity.
+     */
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
@@ -108,6 +123,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the UI depending on whether a user is signed in or not.
+     */
     private fun updateUI(currentUser: FirebaseUser?, login: Boolean){
         if(currentUser != null){
             if(currentUser.isEmailVerified){

@@ -3,6 +3,10 @@ package com.example.organizerapp.db
 import androidx.room.TypeConverter
 import java.util.*
 
+/**
+ * Mandatory convertor for the Room Database entries to change
+ * the date format from Unix timestamp to Kotlin Date object.
+ */
 class Converters {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {

@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.organizerapp.db.entities.User
 
+/**
+ * UserDao is Database Access Object who's interface contains
+ * all the methods database queries to be executed between the application
+ * and SQLite using Room's framework
+ */
 @Dao
 interface UserDao {
 
