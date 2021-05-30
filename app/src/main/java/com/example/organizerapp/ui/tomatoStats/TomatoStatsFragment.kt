@@ -12,12 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.databinding.FragmentTomatoStatsBinding
-import com.example.organizerapp.db.entities.DailyTask
 import com.example.organizerapp.ui.dailyTasks.DailyTasksViewModel
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import kotlin.properties.Delegates
 
+/**
+ * TomatoStatsFragment is used for displaying the daily user's stats
+ *
+ */
 class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
 
     private lateinit var viewDailyTasksModel: DailyTasksViewModel
@@ -31,6 +34,9 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     * Overwritten function onCreateView
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +58,6 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         tomatoStatsAdapter = TomatoStatsAdapter(this)
         recyclerView.adapter = tomatoStatsAdapter
 
-        //
         // This is  for statistics
         tomatoStatsViewModel.getUncompletedDailyTaskGroupedByDate(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyStats ->
             tomatoStatsAdapter.setUncData(dailyStats)
@@ -64,7 +69,6 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
             })
         })
 
-        //
         // This is for the tomato bar
         val today: Calendar = GregorianCalendar()
         // reset hour, minutes, seconds and millis
@@ -91,15 +95,27 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         return root
     }
 
+    /**
+     * Overwritten function onDestroyView
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * Overwritten function onTaskClick.
+     * It shows a Log when tomato stats item is clicked
+     */
     override fun onTaskClick(position: Int) {
         Log.d("","clicked")
     }
 
+    /**
+     * It displays the tomatoes when a daily task is completed
+     * on the tomatoBar on the top of the Fragment. It also contains
+     * the algorithm that changes the ImageViews.
+     */
     fun tomatoBar(allDailyTasks: Int){
         var tomato_precentage = binding.tomatoPercentage
         tomato_precentage.setText("$tasksDoneNum / $allDailyTasks")
@@ -109,10 +125,6 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         val tomato2 = binding.tomato2
         val tomato3 = binding.tomato3
         val tomato4 = binding.tomato4
-
-//        tasksDoneNum = 0 //afto einai to noumero apo ta shmerina teleiwmena task
-//        tasksDoneNum++
-//        Log.d("TAG",tasksDoneNum.toString())
 
         var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
         var i : Int = 0
@@ -151,9 +163,6 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
             }
         }
 
-        //set clicklistener for info
-//        info.setOnClickListener{
-//             Toast.makeText(context, "Swipe finished tasks right & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
         when {
             tomatoes[2] == 0 -> {
                 tomato2.setImageResource(R.drawable.empty_icon)
@@ -212,6 +221,4 @@ class TomatoStatsFragment : Fragment(), TomatoStatsAdapter.OnTaskClickListener {
         Arrays.fill(array, head + 1, array.size, 0)
         array[head]++
     }
-
-
 }

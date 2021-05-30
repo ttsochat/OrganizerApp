@@ -20,10 +20,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 /**
-    Navigation activity is the basic activity that takes care of the navigation
-    between the three main fragment: DailyTasksFragment, MyListsFragment and
-    TomatoStatsFragment. In addition, connects the toolbar and manages it's
-    functionalities, connects the user id with it's viewModel and handles log out action.
+ * Navigation activity is the basic activity that takes care of the navigation
+ * between the three main fragment: DailyTasksFragment, MyListsFragment and
+ * TomatoStatsFragment. In addition, connects the toolbar and manages it's
+ * functionalities, connects the user id with it's viewModel and handles log out action.
  */
 class NavigationActivity : AppCompatActivity() {
 
