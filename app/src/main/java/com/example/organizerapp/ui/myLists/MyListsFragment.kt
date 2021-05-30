@@ -14,6 +14,15 @@ import com.example.organizerapp.db.entities.MyList
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
+
+/**
+    Fragment to display and interact with user lists. This fragment uses a recycler view to display
+    user lists on the screen. It is connected to MyListsViewModel to obtain the data necessary
+    from the data base to submit them to the list adapter in order to be visible to the user.
+    Also it observes the live data sent from the viewModel to have real time updates. At last it
+    handles the navigation to MyListsEditFragment when a list if about to be edit of when a new list
+    is created.
+ */
 class MyListsFragment : Fragment() {
 
     private lateinit var myListsViewModel: MyListsViewModel
@@ -25,7 +34,11 @@ class MyListsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
+    /**
+        Ovewriten onCreateView method takes care of basic binding initialization, connects live data
+        sent from the ViewModel to the recycler view adapter and also observes them in order to have
+        real time updates displayed on screen. Also listen to events from the floating action button.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,7 +89,11 @@ class MyListsFragment : Fragment() {
         _binding = null
     }
 
-    //function for context menuItem selected to delete list
+    /**
+        Overwritten function onContextItemSElected reacts with the popup menu of every cardView-list
+        and when Delete List option is selected from the user it removes the list from data base by
+        calling MyListsViewModel function removeItemFromList.
+     */
     override fun onContextItemSelected(item: MenuItem): Boolean {
 
         myListsViewModel.removeItemFromList(item.itemId)
@@ -84,7 +101,10 @@ class MyListsFragment : Fragment() {
 
     }
 
-    //navigate to myListEditFragment
+    /**
+      Function onClick navigates to MyListsEditFragment when an existing list is selected from the
+      user.
+     */
     private fun onClick(list: MyList){
 
         val bundle = Bundle()
@@ -96,6 +116,10 @@ class MyListsFragment : Fragment() {
     }
 
 
+    /**
+        Function showHideMessage is responsible for updating messageEmptyList textView from visible
+        to invisible when recycler view is empty or not.
+     */
     private fun showHideMessage(list: List<MyList>){
 
         if( !list.isNullOrEmpty()){
