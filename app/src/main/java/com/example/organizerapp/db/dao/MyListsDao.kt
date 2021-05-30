@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.organizerapp.db.entities.MyList
 
+/**
+    Interface for updating, sending, getting and deleting data in the data base
+    using the correct queries.
+ */
 @Dao
 interface MyListsDao {
 
