@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import com.example.organizerapp.db.dao.MyListsDao
 import com.example.organizerapp.db.entities.MyList
 
+/**
+   Class MyListsRepository is responsible for communicating with the database in order to store, get
+    delete and modify data stored in the database.
+ */
 class MyListsRepository(private val myListsDao: MyListsDao) {
-
-    val readAllData: LiveData<List<MyList>> = myListsDao.readAllData()
 
     suspend fun addMyList(newList: MyList){
         myListsDao.addMyList(newList)
