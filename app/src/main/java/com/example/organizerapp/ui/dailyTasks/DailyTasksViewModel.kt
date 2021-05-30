@@ -1,17 +1,12 @@
 package com.example.organizerapp.ui.dailyTasks
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.organizerapp.db.AppDatabase
-import com.example.organizerapp.db.dao.DailyTaskDao
 import com.example.organizerapp.db.entities.DailyTask
-import com.example.organizerapp.db.entities.User
 import com.example.organizerapp.db.repositories.DailyTaskRepository
-import com.example.organizerapp.db.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * DailyTasksViewModel manages the data for daily tasks and displays them to
@@ -67,7 +62,7 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
      * that updates the description of a certain daily task.
      */
     fun setTaskText(position : Int, text : String, userId: String){
-        var updatedTask = DailyTask(dailyTaskList[position].dtid,text, dailyTaskList[position].date,dailyTaskList[position].status,1,userId)
+        val updatedTask = DailyTask(dailyTaskList[position].dtid,text, dailyTaskList[position].date,dailyTaskList[position].status,1,userId)
         dailyTaskList[position].description = text
         viewModelScope.launch(Dispatchers.IO){
             repository.updateDailyTask(updatedTask)
@@ -79,8 +74,8 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
      * that updates the status of a certain daily task to DONE.
      */
     fun taskDone(position: Int, userId: String) {
-        var doneTask = DailyTask(dailyTaskList[position].dtid,dailyTaskList[position].description, dailyTaskList[position].date,"DONE",1,userId)
-        var list = dailyTaskList.toMutableList()
+        val doneTask = DailyTask(dailyTaskList[position].dtid,dailyTaskList[position].description, dailyTaskList[position].date,"DONE",1,userId)
+        val list = dailyTaskList.toMutableList()
         list.removeAt(position)
         dailyTaskList = list.toList()
         viewModelScope.launch(Dispatchers.IO){
@@ -93,8 +88,8 @@ class DailyTasksViewModel(application: Application): AndroidViewModel(applicatio
      * that deletes a certain daily task.
      */
     fun deleteTask(position: Int, userId: String) {
-        var taskForDeletion = DailyTask(dailyTaskList[position].dtid,dailyTaskList[position].description, dailyTaskList[position].date,dailyTaskList[position].status,1,userId)
-        var list = dailyTaskList.toMutableList()
+        val taskForDeletion = DailyTask(dailyTaskList[position].dtid,dailyTaskList[position].description, dailyTaskList[position].date,dailyTaskList[position].status,1,userId)
+        val list = dailyTaskList.toMutableList()
         list.removeAt(position)
         dailyTaskList = list.toList()
         viewModelScope.launch(Dispatchers.IO){

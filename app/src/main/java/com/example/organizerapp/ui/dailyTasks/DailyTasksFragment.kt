@@ -2,7 +2,6 @@ package com.example.organizerapp.ui.dailyTasks
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         auth = FirebaseAuth.getInstance()
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
 
@@ -69,20 +68,20 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
         //displays the LiveData of daily tasks on the fragment using an Observer
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
-        viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
+        viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, { dailyTasks->
             tasksDoneNum=0
             dailyActiveListSize=0
             var dailyListSize=0
-            var list = mutableListOf<DailyTask>()
+            val list = mutableListOf<DailyTask>()
             for(dailyTask in dailyTasks){
-                if(today.time.compareTo(dailyTask.date)<0){
+                if(today.time < dailyTask.date){
                     dailyListSize++
                 }
-                if(dailyTask.status.toString().equals("ACTIVE") && today.time.compareTo(dailyTask.date)<0){
+                if(dailyTask.status.toString() == "ACTIVE" && today.time < dailyTask.date){
                     list.add(dailyTask)
                     dailyActiveListSize++
                 }
-                if(dailyTask.status.toString().equals("DONE") && today.time.compareTo(dailyTask.date)<0){
+                if(dailyTask.status.toString() == "DONE" && today.time < dailyTask.date){
                     tasksDoneNum++
                 }
             }
@@ -127,7 +126,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         touchHelper2.attachToRecyclerView(recyclerView)
 
         //setOnClickListener for the add button on the button of the fragment
-        _binding!!.fab.setOnClickListener { view ->
+        _binding!!.fab.setOnClickListener {
             addTaskDialog()
         }
         return root
@@ -167,7 +166,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
             if(editText.text.toString().trim().isEmpty()){
                 Snackbar.make(view, "You forgot to type your task!", Snackbar.LENGTH_SHORT).show()
             }else{
-                var newTask = DailyTask(0,editText.text.toString(),Calendar.getInstance().time,"ACTIVE",1,auth.currentUser.uid)
+                val newTask = DailyTask(0,editText.text.toString(),Calendar.getInstance().time,"ACTIVE",1,auth.currentUser.uid)
                 viewDailyTasksModel.addDailyTask(newTask)
                 ad.dismiss()
             }
@@ -210,9 +209,9 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
      * on the tomatoBar on the top of the Fragment. It also contains
      * the algorithm that changes the ImageViews.
      */
-    fun tomatoBar(allDailyTasks: Int){
-        var tomato_precentage = binding.tomatoPercentage
-        tomato_precentage.setText("$tasksDoneNum / $allDailyTasks")
+    private fun tomatoBar(allDailyTasks: Int){
+        val tomatoPrecentage = binding.tomatoPercentage
+        tomatoPrecentage.text = "$tasksDoneNum / $allDailyTasks"
 
         val tomato0 = binding.tomato0
         val tomato1 = binding.tomato1
@@ -220,8 +219,8 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         val tomato3 = binding.tomato3
         val tomato4 = binding.tomato4
 
-        var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
-        var i : Int = 0
+        val tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
+        var i = 0
         while (i<tasksDoneNum){
             next(tomatoes)
             i++
@@ -304,11 +303,11 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
     }
 
     fun next(array : IntArray) {
-        var head : Int = 0;
-        var i : Int = 0
+        var head = 0
+        var i = 0
         while (i < array.size){
             if (array[head] > array[i]){
-                head = i;
+                head = i
             }
             i++
         }
@@ -319,7 +318,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
     /**
      * Determines on whether or not the empty task message is visible
      */
-    fun tasksNumberUpdate(numOfTasks : Int){
+    private fun tasksNumberUpdate(numOfTasks : Int){
         if(numOfTasks == 0){
             emptyFragmentMessage.visibility = View.VISIBLE
         }else{

@@ -3,28 +3,25 @@ package com.example.organizerapp.ui.dailyTasks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.db.entities.DailyTask
 
 /**
- * DailyTasksAdapter is the bridge between the DailyStatsView and the underlying data.
+ * DailyTasksAdapter is the bridge between the DailyTasksView and the underlying data.
  */
 class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerView.Adapter<DailyTasksAdapter.TaskViewHolder>() {
 
     private var dailyTaskList = emptyList<DailyTask>()
-
-    class DailyTasksViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    }
 
     /**
      * Overwritten function onCreateViewHolder creates a new RecyclerView.ViewHolder
      * and initializes some private fields to be used by RecyclerView.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_tasks, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_tasks, parent, false)
         return TaskViewHolder(view)
     }
 
@@ -33,7 +30,7 @@ class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerVie
      * the item at the given position and also sets up some private fields to be used by RecyclerView.
      */
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        var task = dailyTaskList[position]
+        val task = dailyTaskList[position]
         holder.textOfTask?.text = task.description
     }
 
@@ -50,7 +47,7 @@ class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerVie
      * it.
      */
     fun removeTaskFromAdapterList(position: Int){
-        var list = dailyTaskList.toMutableList()
+        val list = dailyTaskList.toMutableList()
         list.removeAt(position)
         dailyTaskList = list.toList()
     }
@@ -65,10 +62,10 @@ class DailyTasksAdapter(private var listener: OnTaskClickListener) : RecyclerVie
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
     View.OnClickListener{
         var textOfTask: TextView? = itemView.findViewById<TextView>(R.id.taskText)
-        val editIcon: ImageView? = itemView.findViewById<ImageView>(R.id.editIcon)
+        private val cardView: CardView? = itemView.findViewById<CardView>(R.id.taskCard)
 
         init {
-            editIcon?.setOnClickListener(this)
+            cardView?.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {

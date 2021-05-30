@@ -9,7 +9,7 @@ import java.util.*
  * and contains all the DailyTask fields.
  */
 @Entity(tableName = "daily_task",
-    indices = arrayOf(Index(value = ["user_id"])),
+    indices = [Index(value = ["user_id"])],
     foreignKeys = [
         ForeignKey(entity = User::class,
             parentColumns = ["uid"],
