@@ -14,8 +14,10 @@
             android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.OrganizerApp.NoActionBar">
       </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
