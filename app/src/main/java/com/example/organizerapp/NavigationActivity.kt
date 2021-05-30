@@ -19,7 +19,12 @@ import com.example.organizerapp.ui.user.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-
+/**
+    Navigation activity is the basic activity that takes care of the navigation
+    between the three main fragment: DailyTasksFragment, MyListsFragment and
+    TomatoStatsFragment. In addition, connects the toolbar and manages it's
+    functionalities, connects the user id with it's viewModel and handles log out action.
+ */
 class NavigationActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -28,7 +33,11 @@ class NavigationActivity : AppCompatActivity() {
 
     private lateinit var mUserViewModel: UserViewModel
 
-
+    /**
+     * Overwritten OnCreate method that takes care of basic binding initialization as well as
+     * userViewModel connection, app bar configuration and navigation controller set up.
+     * Also sets the fragments xml files as top destinations for the navigation functionality.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
@@ -64,6 +73,9 @@ class NavigationActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     *  Function to connect the options menu to toolbar
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.navigation, menu)
@@ -86,6 +98,9 @@ class NavigationActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Function to navigate back to host fragment when back button is pressed
+     */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_navigation)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
