@@ -12,6 +12,10 @@ import com.example.organizerapp.databinding.ListDetailsBinding
 import com.example.organizerapp.db.entities.MyList
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * MyListEditFragment is used for editing MyList objects if they already exist or creating new ones.
+ *
+ */
 class MyListEditFragment: Fragment() {
 
     private lateinit var myListEditViewModel: MyListsViewModel
@@ -23,6 +27,14 @@ class MyListEditFragment: Fragment() {
     private lateinit var currentList: String
 
 
+    /**
+        Overwritten function onCreate gets the bundle sent from MyListFragment to initialize
+        listId and userId.
+        ListId value is -1 if list is now created. In any other case the list already exists
+        and listId holds lists unique id.
+        UserId holds the current users unique id in order to be able to send correct info to
+        MyListViewModel.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getInt("listId")?.let { lId ->
@@ -35,6 +47,12 @@ class MyListEditFragment: Fragment() {
 
     }
 
+    /**
+      Overwritten function onCreateView takes care of the basic binding initialization, checks if
+      listId is of a new list to display the correct data or if it is equal to -1 (defaultId). If
+      so it doesn't display any data. Also it manages the listDoneImageButton events in order to
+      update or create a list and after that to navigate back to MyListFragment.
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,12 +96,17 @@ class MyListEditFragment: Fragment() {
     }
 
 
-
+    /**
+      Function for updating an existing list by sending current displied data back to MyListViewModel.
+     */
     private fun updateList(title: String, list: String, id: Int) {
         myListEditViewModel.updateList(title,list,id,userId)
     }
 
 
+    /**
+        Function for adding a list by sending the new list back to MyListViewModel.
+     */
     fun addNewList(title: String, list: String){
         myListEditViewModel.addItemToList(MyList(0,title, list, userId))
     }
