@@ -4,6 +4,9 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import java.util.*
 
+/**
+    Data class DailyTask holds the data of the daily task object.
+ */
 @Entity(tableName = "daily_task",
     indices = arrayOf(Index(value = ["user_id"])),
     foreignKeys = [
