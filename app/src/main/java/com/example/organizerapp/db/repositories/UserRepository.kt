@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import com.example.organizerapp.db.dao.UserDao
 import com.example.organizerapp.db.entities.User
 
+/**
+ * UserRepository calls all the UserDao functions
+ */
 class UserRepository(private val userDao: UserDao) {
 
     val readAllData : LiveData<List<User>> = userDao.readAllData()

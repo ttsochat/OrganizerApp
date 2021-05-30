@@ -5,7 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- Data class User hold the data of a user object.
+ * User data class that will be the user_table Table in the Room Database
+ * and contains all the Users fields.
  */
 @Entity(tableName = "user_table")
 data class User(

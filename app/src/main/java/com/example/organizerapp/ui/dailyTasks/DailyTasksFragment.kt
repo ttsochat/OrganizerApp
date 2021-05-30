@@ -21,7 +21,9 @@ import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import kotlin.properties.Delegates
 
-
+/**
+ * DailyTasksFragment is used for displaying the daily tasks.
+ */
 class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
     private lateinit var viewDailyTasksModel: DailyTasksViewModel
@@ -32,13 +34,13 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
     private var tasksDoneNum by Delegates.notNull<Int>()
     private var dailyActiveListSize: Int = 0
 
-
-    //val firebaseDatabase = FirebaseDataBase.getInstance()
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     * Overwritten function onCreateView
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +57,6 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
 
         val view = inflater.inflate(R.layout.fragment_daily_tasks, container, false)
 
-//        val recyclerView = view.tasksRecycler
         adapter = DailyTasksAdapter(this)
 
         val today: Calendar = GregorianCalendar()
@@ -66,7 +67,7 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         today[Calendar.SECOND] = 0
         today[Calendar.MILLISECOND] = 0
 
-
+        //displays the LiveData of daily tasks on the fragment using an Observer
         viewDailyTasksModel = ViewModelProvider(this).get(DailyTasksViewModel::class.java)
         viewDailyTasksModel.getDailyTasksByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, androidx.lifecycle.Observer { dailyTasks->
             tasksDoneNum=0
@@ -96,74 +97,62 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         tasksNumberUpdate(dailyActiveListSize)
 
 
-//        val info = binding.info
-//
-//        //set clicklistener for info
-//        info.setOnClickListener{
-//             Toast.makeText(context, "Swipe finished tasks right to delete & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
-//
-//        }
-
+        //the object that implements the swipe right functionality that implies that the task is done
         val swipeDelete = object : SwipeToDone() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position : Int = viewHolder.adapterPosition
-                val deletedTask : DailyTask = viewDailyTasksModel.getSpecificTask(position)
                 viewDailyTasksModel.taskDone(position, auth.currentUser.uid)
                 adapter.removeTaskFromAdapterList(position)
-//                tasksNumberUpdate(viewDailyTasksModel.getTasks().size)
                 adapter.notifyItemRemoved(position)
-                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG)
-//                    .setAction("Undo") { _ ->
-//                        viewDailyTasksModel.addTaskToSpecificPosition(position, deletedTask)
-//                        adapter.addTaskToSpecificPosition(position, deletedTask)
-//                        adapter.notifyItemInserted(position)
-//                    }
-                    .show()
+                Snackbar.make(recyclerView, "Good job, you finished this task!", Snackbar.LENGTH_LONG).show()
             }
         }
 
+        //inserts the previous object to an ItemTouchHelper
         val touchHelper = ItemTouchHelper(swipeDelete)
         touchHelper.attachToRecyclerView(recyclerView)
-//
+
+        //the object that implements the swipe left functionality that deletes the task
         val swipeArchive = object : SwipeToArchive(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position : Int = viewHolder.adapterPosition
-                val archivedTask : DailyTask = viewDailyTasksModel.getSpecificTask(position)
                 viewDailyTasksModel.deleteTask(position, auth.currentUser.uid)
                 adapter.removeTaskFromAdapterList(position)
                 adapter.notifyItemRemoved(position)
-                Snackbar.make(recyclerView, "This task has been removed!", Snackbar.LENGTH_LONG)
-//                    .setAction("Undo") { _ ->
-//                        viewDailyTasksModel.addTaskToSpecificPosition(position, archivedTask)
-//                        adapter.addTaskToSpecificPosition(position, archivedTask)
-//                        adapter.notifyItemInserted(position)
-//                    }
-                    .show()
+                Snackbar.make(recyclerView, "This task has been removed!", Snackbar.LENGTH_LONG).show()
             }
         }
+        //inserts the previous object to an ItemTouchHelper
         val touchHelper2 = ItemTouchHelper(swipeArchive)
         touchHelper2.attachToRecyclerView(recyclerView)
 
-//        viewModel.text.observe(viewLifecycleOwner, {
-//            textView.text = it
-//        })
-        //Floating action button listener!
+        //setOnClickListener for the add button on the button of the fragment
         _binding!!.fab.setOnClickListener { view ->
             addTaskDialog()
         }
-
         return root
     }
 
+    /**
+     * Overwritten function onDestroyView
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * Overwritten function onTaskClick. Allows the user to edit the description
+     * of a daily task.
+     */
     override fun onTaskClick(position: Int) {
         editTaskDialog(position)
     }
 
+    /**
+     * Adds a new daily task on the fragment and also calls the corresponding methods
+     * of the Adapter and the ViewModel
+     */
     private fun addTaskDialog(){
         val builder = AlertDialog.Builder(context)
         builder.setTitle("New Task")
@@ -186,15 +175,12 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         cancel.setOnClickListener{
             ad.dismiss()
         }
-//        builder.setPositiveButton("DONE") { _, _ ->
-//            var newTask = Task(editText.text.toString())
-//            viewModel.getTasks().add(newTask)
-//        }
-//        builder.setNegativeButton("CANCEL") { _, _ ->
-//        }
-//        builder.show() this doesn't work maybe
     }
 
+    /**
+     * Edits the description of a new daily task and also calls the corresponding methods
+     * of the Adapter and the ViewModel
+     */
     private fun editTaskDialog(position: Int){
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Edit Task")
@@ -217,15 +203,13 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         cancel.setOnClickListener{
             ad.dismiss()
         }
-//        builder.setPositiveButton("DONE") { _, _ ->
-//            viewDailyTasksModel.setTaskText(position, editText.text.toString())
-//            adapter.notifyDataSetChanged()
-//        }
-//        builder.setNegativeButton("CANCEL") { _, _ ->
-//        }
-//        builder.show() this is a foking cunt
     }
 
+    /**
+     * It displays the tomatoes when a daily task is completed
+     * on the tomatoBar on the top of the Fragment. It also contains
+     * the algorithm that changes the ImageViews.
+     */
     fun tomatoBar(allDailyTasks: Int){
         var tomato_precentage = binding.tomatoPercentage
         tomato_precentage.setText("$tasksDoneNum / $allDailyTasks")
@@ -235,10 +219,6 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         val tomato2 = binding.tomato2
         val tomato3 = binding.tomato3
         val tomato4 = binding.tomato4
-
-//        tasksDoneNum = 0 //afto einai to noumero apo ta shmerina teleiwmena task
-//        tasksDoneNum++
-//        Log.d("TAG",tasksDoneNum.toString())
 
         var tomatoes : IntArray = intArrayOf(0, 0, 0, 0, 0)
         var i : Int = 0
@@ -277,9 +257,6 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
             }
         }
 
-        //set clicklistener for info
-//        info.setOnClickListener{
-//             Toast.makeText(context, "Swipe finished tasks right & unfinished tasks left to save for later", Toast.LENGTH_LONG).show()
         when {
             tomatoes[2] == 0 -> {
                 tomato2.setImageResource(R.drawable.empty_icon)
@@ -339,16 +316,16 @@ class DailyTasksFragment : Fragment(), DailyTasksAdapter.OnTaskClickListener{
         array[head]++
     }
 
+    /**
+     * Determines on whether or not the empty task message is visible
+     */
     fun tasksNumberUpdate(numOfTasks : Int){
         if(numOfTasks == 0){
             emptyFragmentMessage.visibility = View.VISIBLE
         }else{
             emptyFragmentMessage.visibility = View.INVISIBLE
         }
-
     }
-
-
 }
 
 

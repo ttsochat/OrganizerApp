@@ -1,6 +1,5 @@
 package com.example.organizerapp.ui.tomatoStats
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.organizerapp.R
 import com.example.organizerapp.db.entities.DailyTask
 
+/**
+ * TomatoStatsAdapter is the bridge between the TomatoStatsView and the underlying data.
+ */
 class TomatoStatsAdapter(private var listener: OnTaskClickListener) : RecyclerView.Adapter<TomatoStatsAdapter.TaskViewHolder>() {
 
     private var tomatoStatsCompList = emptyList<DailyTask>()
@@ -18,11 +20,19 @@ class TomatoStatsAdapter(private var listener: OnTaskClickListener) : RecyclerVi
     class TomatoStatsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
+    /**
+     * Overwritten function onCreateViewHolder creates a new RecyclerView.ViewHolder
+     * and initializes some private fields to be used by RecyclerView.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item_tomato_stats, parent, false)
         return TaskViewHolder(view)
     }
 
+    /**
+     * Overwritten function onBindViewHolder updates the RecyclerView.ViewHolder contents with
+     * the item at the given position and also sets up some private fields to be used by RecyclerView.
+     */
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         var statUnc = tomatoStatsUncList.get(position)
         var statC = tomatoStatsCompList.getOrNull(position)
@@ -43,24 +53,28 @@ class TomatoStatsAdapter(private var listener: OnTaskClickListener) : RecyclerVi
         }
     }
 
+    /**
+     * Sets the list in the adapter with all tasks grouped by date
+     * in order to be compared with the completed tasks.
+     */
     fun setUncData(dailyTasks: List<DailyTask>){
         this.tomatoStatsUncList = dailyTasks
         this.tomatoStatsCompList = dailyTasks
         notifyDataSetChanged()
     }
 
+    /**
+     * Sets the list in the adapter with completed tasks grouped by date
+     * in order to be compared with all tasks.
+     */
     fun setComData(dailyTasks: List<DailyTask>){
         this.tomatoStatsCompList = dailyTasks
         notifyDataSetChanged()
     }
 
-//    fun removeTaskFromAdapterList(position: Int){
-//        var list = tomatoStatsList.toMutableList()
-//        list.removeAt(position)
-//        tomatoStatsList = list.toList()
-//    }
-
-
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     */
     override fun getItemCount(): Int {
         return tomatoStatsUncList.size
     }
