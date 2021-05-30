@@ -2,9 +2,11 @@ package com.example.organizerapp.ui.myLists
 
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +45,7 @@ class MyListsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         auth = FirebaseAuth.getInstance()
 
@@ -54,8 +56,8 @@ class MyListsFragment : Fragment() {
         val root: View = binding.root
 
         //view model observer and adapter submit list!!
-        myListsViewModel.getMyListsByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, Observer{
-            var myList = mutableListOf<MyList>()
+        myListsViewModel.getMyListsByUserId(auth.currentUser.uid).observe(viewLifecycleOwner, {
+            val myList = mutableListOf<MyList>()
             for(list in it){
                 myList.add(list)
             }
@@ -108,7 +110,7 @@ class MyListsFragment : Fragment() {
     private fun onClick(list: MyList){
 
         val bundle = Bundle()
-        list.mlid?.let { bundle.putInt("listId", it) }
+        list.mlid.let { bundle.putInt("listId", it) }
         bundle.putString("userId", auth.currentUser.uid)
         view?.let { Navigation.findNavController(it)
             .navigate(R.id.action_nav_my_list_to_myListEditFragment, bundle)}
